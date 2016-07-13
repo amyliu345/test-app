@@ -1,0 +1,79 @@
+  body {
+    font: 12px Open Sans, sans-serif;
+  }
+
+  h1{
+    font: 18px Open Sans, sans-serif;
+  }
+  /*Transitions graph styling*/
+
+  .transition.axis path,
+
+  .transition.axis line {
+      fill: none;
+      stroke: #000;
+      shape-rendering: crispEdges;
+  }
+
+  .transition.y.axis path {
+      display: none;
+  }
+  .transition.button{
+    display:inline;
+    padding-left: 20px;
+  }
+
+  .label{
+    font: 12px Open Sans, sans-serif;
+  }
+
+  .bigLabel{
+    font: 18px Open Sans, sans-serif;
+
+  }
+ /*tooltip styling*/
+  .d3-tip {
+    line-height: 1;
+    padding: 7px;
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    border-radius: 2px;
+    font: 12px Open Sans, sans-serif;
+
+  }
+
+  /* Creates a small triangle extender for the tooltip */
+  .d3-tip:after {
+    box-sizing: border-box;
+    display: inline;
+
+    width: 100%;
+    line-height: 1;
+    color: rgba(0, 0, 0, 0.7);
+    content: "\25BC";
+    position: absolute;
+    text-align: center;
+  }
+
+  /* Style northward tooltips differently */
+  .d3-tip.n:after {
+    margin: -1px 0 0 0;
+    top: 100%;
+    left: 0;
+  }
+
+  #travelEmissions{
+    float: left;
+    width:180;
+    padding-top: 20px;
+    padding-bottom:20px;
+    padding-left: 20px;
+  }
+
+   #outsideEmissions{
+    float: left;
+    width:180;
+    padding-top: 20px;
+    padding-bottom:20px;
+    padding-left: 20px;
+  }

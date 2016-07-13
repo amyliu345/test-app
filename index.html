@@ -1,0 +1,24 @@
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+
+<script type="text/javascript" src="app/angularModule.js"></script>
+<script type="text/javascript" src="app/angularModule2.js"></script>
+<script type="text/javascript" src="app/travelEmissionsCtrl.js"></script>
+<script type="text/javascript" src="app/travelEmissionsDirective.js"></script>
+
+<script type="text/javascript" src="app/outsideEmissionsCtrl.js"></script>
+<!-- <script type="text/javascript" src="app/outsideEmissionsDirective.js"></script>
+ -->
+<link rel="stylesheet" href="css/style.css">
+
+
+<body>
+	<div ng-app="myApp" ng-controller="travelEmissionsCtrl" id='travel'>
+		<h1>Daily Carbon Emissions</h1>
+	    <bars-chart chart-data="myData" id='travelEmissions' ></bars-chart>
+
+	    <h1>Outside Emissions</h1>
+	    <outside-emissions chart-data="outsideData" id='outsideEmissions' ></outside-emissions>
+	</div>
+</body>
