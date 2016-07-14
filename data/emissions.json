@@ -1,0 +1,601 @@
+[{
+	"data": [{
+		"count": "4.9462",
+		"day": "Thursday"
+	}, {
+		"count": "4.7925",
+		"day": "Friday"
+	}, {
+		"count": "6.41",
+		"day": "Saturday"
+	}, {
+		"count": "10.574",
+		"day": "Sunday"
+	}, {
+		"count": "9.8439",
+		"day": "Monday"
+	}, {
+		"count": "0.85548",
+		"day": "Tuesday"
+	}, {
+		"count": "8.2904",
+		"day": "Wednesday"
+	}],
+	"name": "Car/Van"
+}, {
+	"data": [{
+		"count": "0",
+		"day": "Thursday"
+	}, {
+		"count": "0",
+		"day": "Friday"
+	}, {
+		"count": "0",
+		"day": "Saturday"
+	}, {
+		"count": "0",
+		"day": "Sunday"
+	}, {
+		"count": "0",
+		"day": "Monday"
+	}, {
+		"count": "0",
+		"day": "Tuesday"
+	}, {
+		"count": "0",
+		"day": "Wednesday"
+	}],
+	"name": "Taxi"
+}, {
+	"data": [{
+		"count": "0",
+		"day": "Thursday"
+	}, {
+		"count": "0",
+		"day": "Friday"
+	}, {
+		"count": "0",
+		"day": "Saturday"
+	}, {
+		"count": "0",
+		"day": "Sunday"
+	}, {
+		"count": "0",
+		"day": "Monday"
+	}, {
+		"count": "0",
+		"day": "Tuesday"
+	}, {
+		"count": "0",
+		"day": "Wednesday"
+	}],
+	"name": "Bus"
+}, {
+	"data": [{
+		"count": "0",
+		"day": "Thursday"
+	}, {
+		"count": "0",
+		"day": "Friday"
+	}, {
+		"count": "0",
+		"day": "Saturday"
+	}, {
+		"count": "0",
+		"day": "Sunday"
+	}, {
+		"count": "0",
+		"day": "Monday"
+	}, {
+		"count": "0",
+		"day": "Tuesday"
+	}, {
+		"count": "0",
+		"day": "Wednesday"
+	}],
+	"name": "Other (mode)"
+}, {
+	"data": [{
+		"count": "0",
+		"day": "Thursday"
+	}, {
+		"count": "0",
+		"day": "Friday"
+	}, {
+		"count": "0",
+		"day": "Saturday"
+	}, {
+		"count": "0",
+		"day": "Sunday"
+	}, {
+		"count": "0",
+		"day": "Monday"
+	}, {
+		"count": "0.098006",
+		"day": "Tuesday"
+	}, {
+		"count": "0",
+		"day": "Wednesday"
+	}],
+	"name": "Motorcycle/Scooter"
+}, {
+	"data": [{
+		"count": "0",
+		"day": "Thursday"
+	}, {
+		"count": "0.30012",
+		"day": "Friday"
+	}, {
+		"count": "0",
+		"day": "Saturday"
+	}, {
+		"count": "0",
+		"day": "Sunday"
+	}, {
+		"count": "0",
+		"day": "Monday"
+	}, {
+		"count": "0",
+		"day": "Tuesday"
+	}, {
+		"count": "0",
+		"day": "Wednesday"
+	}],
+	"name": "LRT/MRT"
+}, {
+	"data": [{
+		"count": "0",
+		"day": "Thursday"
+	}, {
+		"count": "0",
+		"day": "Friday"
+	}, {
+		"count": "0",
+		"day": "Saturday"
+	}, {
+		"count": "0",
+		"day": "Sunday"
+	}, {
+		"count": "0",
+		"day": "Monday"
+	}, {
+		"count": "0.026735",
+		"day": "Tuesday"
+	}, {
+		"count": "0",
+		"day": "Wednesday"
+	}],
+	"name": "Bicycle"
+}, {
+	"data": [{
+		"count": "0.020844",
+		"day": "Thursday"
+	}, {
+		"count": "0.011729",
+		"day": "Friday"
+	}, {
+		"count": "0.00045001",
+		"day": "Saturday"
+	}, {
+		"count": "0.07044",
+		"day": "Sunday"
+	}, {
+		"count": "0",
+		"day": "Monday"
+	}, {
+		"count": "0.0026709",
+		"day": "Tuesday"
+	}, {
+		"count": "0.010929",
+		"day": "Wednesday"
+	}],
+	"name": "Foot"
+}, {
+	"data": [{
+		"count": "0",
+		"day": "Thursday"
+	}, {
+		"count": "0",
+		"day": "Friday"
+	}, {
+		"count": "0",
+		"day": "Saturday"
+	}, {
+		"count": "0",
+		"day": "Sunday"
+	}, {
+		"count": "0",
+		"day": "Monday"
+	}, {
+		"count": "0",
+		"day": "Tuesday"
+	}, {
+		"count": "0",
+		"day": "Wednesday"
+	}],
+	"name": "Work"
+}, {
+	"data": [{
+		"count": "0",
+		"day": "Thursday"
+	}, {
+		"count": "0",
+		"day": "Friday"
+	}, {
+		"count": "0",
+		"day": "Saturday"
+	}, {
+		"count": "0",
+		"day": "Sunday"
+	}, {
+		"count": "0",
+		"day": "Monday"
+	}, {
+		"count": "0",
+		"day": "Tuesday"
+	}, {
+		"count": "0",
+		"day": "Wednesday"
+	}],
+	"name": "Work-Related Business"
+}, {
+	"data": [{
+		"count": "0",
+		"day": "Thursday"
+	}, {
+		"count": "0",
+		"day": "Friday"
+	}, {
+		"count": "0",
+		"day": "Saturday"
+	}, {
+		"count": "0",
+		"day": "Sunday"
+	}, {
+		"count": "0",
+		"day": "Monday"
+	}, {
+		"count": "0",
+		"day": "Tuesday"
+	}, {
+		"count": "0",
+		"day": "Wednesday"
+	}],
+	"name": "Education"
+}, {
+	"data": [{
+		"count": "0",
+		"day": "Thursday"
+	}, {
+		"count": "0",
+		"day": "Friday"
+	}, {
+		"count": "0",
+		"day": "Saturday"
+	}, {
+		"count": "0",
+		"day": "Sunday"
+	}, {
+		"count": "0",
+		"day": "Monday"
+	}, {
+		"count": "0",
+		"day": "Tuesday"
+	}, {
+		"count": "0",
+		"day": "Wednesday"
+	}],
+	"name": "Pick Up/Drop Off"
+}, {
+	"data": [{
+		"count": "0",
+		"day": "Thursday"
+	}, {
+		"count": "0",
+		"day": "Friday"
+	}, {
+		"count": "0",
+		"day": "Saturday"
+	}, {
+		"count": "0",
+		"day": "Sunday"
+	}, {
+		"count": "0",
+		"day": "Monday"
+	}, {
+		"count": "0",
+		"day": "Tuesday"
+	}, {
+		"count": "0",
+		"day": "Wednesday"
+	}],
+	"name": "Personal Errand/Task"
+}, {
+	"data": [{
+		"count": "0",
+		"day": "Thursday"
+	}, {
+		"count": "1.6653",
+		"day": "Friday"
+	}, {
+		"count": "0",
+		"day": "Saturday"
+	}, {
+		"count": "4.6801",
+		"day": "Sunday"
+	}, {
+		"count": "0",
+		"day": "Monday"
+	}, {
+		"count": "0.44184",
+		"day": "Tuesday"
+	}, {
+		"count": "5.6341",
+		"day": "Wednesday"
+	}],
+	"name": "Meal/Eating Break"
+}, {
+	"data": [{
+		"count": "0",
+		"day": "Thursday"
+	}, {
+		"count": "0",
+		"day": "Friday"
+	}, {
+		"count": "0",
+		"day": "Saturday"
+	}, {
+		"count": "0.27197",
+		"day": "Sunday"
+	}, {
+		"count": "0",
+		"day": "Monday"
+	}, {
+		"count": "0",
+		"day": "Tuesday"
+	}, {
+		"count": "0",
+		"day": "Wednesday"
+	}],
+	"name": "Shopping"
+}, {
+	"data": [{
+		"count": "6.2277",
+		"day": "Thursday"
+	}, {
+		"count": "3.1145",
+		"day": "Friday"
+	}, {
+		"count": "7.1524",
+		"day": "Saturday"
+	}, {
+		"count": "1.4829",
+		"day": "Sunday"
+	}, {
+		"count": "7.8935",
+		"day": "Monday"
+	}, {
+		"count": "2.4308",
+		"day": "Tuesday"
+	}, {
+		"count": "0.14383",
+		"day": "Wednesday"
+	}],
+	"name": "Social"
+}, {
+	"data": [{
+		"count": "0",
+		"day": "Thursday"
+	}, {
+		"count": "0",
+		"day": "Friday"
+	}, {
+		"count": "0",
+		"day": "Saturday"
+	}, {
+		"count": "0",
+		"day": "Sunday"
+	}, {
+		"count": "0",
+		"day": "Monday"
+	}, {
+		"count": "0",
+		"day": "Tuesday"
+	}, {
+		"count": "0.077806",
+		"day": "Wednesday"
+	}],
+	"name": "Recreation"
+}, {
+	"data": [{
+		"count": "0",
+		"day": "Thursday"
+	}, {
+		"count": "0",
+		"day": "Friday"
+	}, {
+		"count": "0",
+		"day": "Saturday"
+	}, {
+		"count": "0",
+		"day": "Sunday"
+	}, {
+		"count": "0",
+		"day": "Monday"
+	}, {
+		"count": "0",
+		"day": "Tuesday"
+	}, {
+		"count": "0",
+		"day": "Wednesday"
+	}],
+	"name": "Entertainment"
+}, {
+	"data": [{
+		"count": "0",
+		"day": "Thursday"
+	}, {
+		"count": "0",
+		"day": "Friday"
+	}, {
+		"count": "0",
+		"day": "Saturday"
+	}, {
+		"count": "0",
+		"day": "Sunday"
+	}, {
+		"count": "0",
+		"day": "Monday"
+	}, {
+		"count": "0",
+		"day": "Tuesday"
+	}, {
+		"count": "0",
+		"day": "Wednesday"
+	}],
+	"name": "Sports/Exercise"
+}, {
+	"data": [{
+		"count": "0",
+		"day": "Thursday"
+	}, {
+		"count": "0",
+		"day": "Friday"
+	}, {
+		"count": "0.2841",
+		"day": "Saturday"
+	}, {
+		"count": "0.51408",
+		"day": "Sunday"
+	}, {
+		"count": "0",
+		"day": "Monday"
+	}, {
+		"count": "0",
+		"day": "Tuesday"
+	}, {
+		"count": "0.25588",
+		"day": "Wednesday"
+	}],
+	"name": "To Accompany Someone"
+}, {
+	"data": [{
+		"count": "0",
+		"day": "Thursday"
+	}, {
+		"count": "0",
+		"day": "Friday"
+	}, {
+		"count": "0",
+		"day": "Saturday"
+	}, {
+		"count": "0",
+		"day": "Sunday"
+	}, {
+		"count": "0",
+		"day": "Monday"
+	}, {
+		"count": "0",
+		"day": "Tuesday"
+	}, {
+		"count": "0",
+		"day": "Wednesday"
+	}],
+	"name": "Other Home"
+}, {
+	"data": [{
+		"count": "0",
+		"day": "Thursday"
+	}, {
+		"count": "0",
+		"day": "Friday"
+	}, {
+		"count": "0",
+		"day": "Saturday"
+	}, {
+		"count": "0",
+		"day": "Sunday"
+	}, {
+		"count": "0",
+		"day": "Monday"
+	}, {
+		"count": "0",
+		"day": "Tuesday"
+	}, {
+		"count": "0",
+		"day": "Wednesday"
+	}],
+	"name": "Medical/Dental (Self)"
+}, {
+	"data": [{
+		"count": "0",
+		"day": "Thursday"
+	}, {
+		"count": "0.00762",
+		"day": "Friday"
+	}, {
+		"count": "0",
+		"day": "Saturday"
+	}, {
+		"count": "0",
+		"day": "Sunday"
+	}, {
+		"count": "0",
+		"day": "Monday"
+	}, {
+		"count": "0",
+		"day": "Tuesday"
+	}, {
+		"count": "0",
+		"day": "Wednesday"
+	}],
+	"name": "Other (stop)"
+}, {
+	"data": [{
+		"count": "0",
+		"day": "Thursday"
+	}, {
+		"count": "0",
+		"day": "Friday"
+	}, {
+		"count": "0",
+		"day": "Saturday"
+	}, {
+		"count": "0",
+		"day": "Sunday"
+	}, {
+		"count": "0",
+		"day" : "Monday"
+	}, {
+		"count": "0",
+		"day": "Tuesday"
+	}, {
+		"count": "0",
+		"day": "Wednesday"
+	}],
+	"name": "Change Mode/Transfer"
+}, {
+	"data": [{
+		"count": "0",
+		"day": "Thursday"
+	}, {
+		"count": "0.039465",
+		"day": "Friday"
+	}, {
+		"count": "0",
+		"day": "Saturday"
+	}, {
+		"count": "0.0070167",
+		"day": "Sunday"
+	}, {
+		"count": "0",
+		"day": "Monday"
+	}, {
+		"count": "0.0031432",
+		"day": "Tuesday"
+	}, {
+		"count": "0.013303",
+		"day": "Wednesday"
+	}],
+	"name": "Home"
+}]

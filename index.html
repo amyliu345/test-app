@@ -3,22 +3,24 @@
 <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 
 <script type="text/javascript" src="app/angularModule.js"></script>
-<script type="text/javascript" src="app/angularModule2.js"></script>
 <script type="text/javascript" src="app/travelEmissionsCtrl.js"></script>
 <script type="text/javascript" src="app/travelEmissionsDirective.js"></script>
 
-<script type="text/javascript" src="app/outsideEmissionsCtrl.js"></script>
-<!-- <script type="text/javascript" src="app/outsideEmissionsDirective.js"></script>
+<!-- <script type="text/javascript" src="app/outsideEmissionsCtrl.js"></script>
+ --><!-- <script type="text/javascript" src="app/outsideEmissionsDirective.js"></script>
  -->
 <link rel="stylesheet" href="css/style.css">
 
 
 <body>
 	<div ng-app="myApp" ng-controller="travelEmissionsCtrl" id='travel'>
+		
 		<h1>Daily Carbon Emissions</h1>
-	    <bars-chart chart-data="myData" id='travelEmissions' ></bars-chart>
 
-	    <h1>Outside Emissions</h1>
-	    <outside-emissions chart-data="outsideData" id='outsideEmissions' ></outside-emissions>
+	    <bars-chart chart-data="travelData" chart-title = "Travel Emissions (kg CO2)" world=5 neighbors=6 legend=true id='travelEmissions' ></bars-chart>
+
+	    <bars-chart chart-data="outsideData" chart-title = "Out of Home Emissions (kg CO2)" world=2 neighbors=7 legend=true id='outsideEmissions' ></bars-chart>
+
+	    <bars-chart chart-data="totalData" chart-title = "Total Emissions (kg CO2)" world=4 neighbors=6 legend=false id='totalEmissions' ></bars-chart>
 	</div>
 </body>
