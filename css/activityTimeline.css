@@ -1,0 +1,30 @@
+/*.activity{
+	padding-left: 30px;
+}*/
+
+#activityLegend{
+	font: 9.8px Open Sans, sans-serif;
+	padding-left: 0px;
+	padding-top: 10px;
+	width:300px;
+}
+#activityLegend2{
+	font: 9.8px Open Sans, sans-serif;
+	padding-left: 0px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	width:300px;
+
+}
+
+.activity.axis path,
+
+.activity.axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+.activity.y.axis path {
+    display: none;
+}

@@ -4,33 +4,12 @@
 
   h1{
     font: 18px Open Sans, sans-serif;
-  }
-  /*Transitions graph styling*/
-
-  .transition.axis path,
-
-  .transition.axis line {
-      fill: none;
-      stroke: #000;
-      shape-rendering: crispEdges;
-  }
-
-  .transition.y.axis path {
-      display: none;
-  }
-  .transition.button{
-    display:inline;
-    padding-left: 20px;
-  }
-
-  .label{
-    font: 12px Open Sans, sans-serif;
-  }
-
-  .bigLabel{
+/*    width:25%;
+*/      }
+  h2{
     font: 18px Open Sans, sans-serif;
-
-  }
+/*    width:25%;
+*/  }
  /*tooltip styling*/
   .d3-tip {
     line-height: 1;
@@ -55,33 +34,6 @@
     text-align: center;
   }
 
-  /* Style northward tooltips differently */
-  .d3-tip.n:after {
-    margin: -1px 0 0 0;
-    top: 100%;
-    left: 0;
-  }
-
-  #travelEmissions{
-    float: left;
-    width:180;
-    padding-top: 20px;
-    padding-bottom:20px;
-    padding-left: 20px;
-  }
-
-  #outsideEmissions{
-    float: left;
-    width:180;
-    padding-top: 20px;
-    padding-bottom:20px;
-    padding-left: 50px;
-  }
-
-  #totalEmissions{
-    float: left;
-    width:180;
-    padding-top: 20px;
-    padding-bottom:20px;
-    padding-left: 50px;
+  .legend{
+    float:left;
   }

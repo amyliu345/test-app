@@ -1,10 +1,4 @@
 angular.module('myApp').controller('travelEmissionsCtrl', ['$scope', '$http', function ($scope, $http) {
-      // $http.get('data/travelEmissions.json')
-      //    .then(function(res){
-      //       $scope.myData = res.data; 
-      //       console.log(res.data);
-      //       // $scope.outsideData = res.data;
-      //     });
 
      $http.get('data/emissions.json')
          .then(function(res){
@@ -19,7 +13,6 @@ angular.module('myApp').controller('travelEmissionsCtrl', ['$scope', '$http', fu
          		if (travelActivities.indexOf(res.data[i].name) > -1){
          			travelData.push(res.data[i]);
          		}
-         		// console.log(travelData);
 
          		if (outsideActivities.indexOf(res.data[i].name) > -1){
          			outsideData.push(res.data[i]);
@@ -31,31 +24,21 @@ angular.module('myApp').controller('travelEmissionsCtrl', ['$scope', '$http', fu
          	$scope.travelData=travelData;
             $scope.outsideData=outsideData;
          	$scope.totalData=totalData;
-	
-			// console.log($scope.travelData);
-			// console.log($scope.outsideData);
-			// console.log(totalData);
 
-         	// var travelData = [];
-         	// for (i=0; i < 9; i++){
-         	//     travelData.push(res.data[i]);
-         	// }
-
-         	// $scope.travelData = travelData;
-
-         	// var outsideData = [];
-          //   for (i=9; i < 19; i++){
-         	//     outsideData.push(res.data[i]);
-         	// }
-
-         	// $scope.outsideData = outsideData;
-
-          //   // $scope.outsideData = res.data;
-          // });
-      // $http.get('data/outsideEmissions.json')
-      //    .then(function(res){
-      //       $scope.outsideData = res.data; 
           });
+
+
+   $http.get('data/activityTimeline.json')
+       .then(function(res){
+          var activityData = [];
+
+          for (var i = 0; i < res.data.length; i++){
+              activityData.push(res.data[i]);
+          }
+
+          $scope.activityData=activityData;
+
+        });
 
 
   }]);

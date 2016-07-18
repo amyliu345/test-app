@@ -3,24 +3,72 @@
 <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 
 <script type="text/javascript" src="app/angularModule.js"></script>
-<script type="text/javascript" src="app/travelEmissionsCtrl.js"></script>
+<script type="text/javascript" src="js/d3-timeline.js"></script>
+
+
+<!-- <script type="text/javascript" src="app/activityTimelineCtrl.js"></script>
+ --><!-- <script type="text/javascript" src="app/activityTimelineDirective.js"></script>
+ --><script type="text/javascript" src="app/travelEmissionsCtrl.js"></script>
 <script type="text/javascript" src="app/travelEmissionsDirective.js"></script>
 
 <!-- <script type="text/javascript" src="app/outsideEmissionsCtrl.js"></script>
  --><!-- <script type="text/javascript" src="app/outsideEmissionsDirective.js"></script>
  -->
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/activityTimeline.css">
+<link rel="stylesheet" href="css/chartPlacement.css">
+<link rel="stylesheet" href="css/dailyEmissions.css">
 
 
 <body>
+
+<!-- 	<div ng-app="myApp" ng-controller="activityTimelineCtrl" id='timeline'>
+		<h1>Daily Time Use</h1>
+	    <activity-timeline chart-data="activityData" legend=true id='activityTimeline' ></activity-timeline>
+	    <div class="legend" id="activityLegend"></div>
+   		<div class="legend" id="activityLegend2"></div>
+	</div> -->
+
+
+
 	<div ng-app="myApp" ng-controller="travelEmissionsCtrl" id='travel'>
 		
-		<h1>Daily Carbon Emissions</h1>
+		<div class="dailyTime">
+			<h1>Daily Time Use</h1>
+		    <activity-timeline chart-data="activityData" legend=true id='activityTimeline' ></activity-timeline>
+<!-- 		    <div class="legend" id="activityLegend"></div>
+	   		<div class="legend" id="activityLegend2"></div> -->
+		</div>
 
-	    <bars-chart chart-data="travelData" chart-title = "Travel Emissions (kg CO2)" world=5 neighbors=6 legend=true id='travelEmissions' ></bars-chart>
+		<div class="dailyEmissions">
+			<h2>Daily Carbon Emissions</h2>
+			<emissions chart-data="travelData" chart-title = "Travel Emissions (kg CO2)" world=5 neighbors=6 legend=true legend-div='travelLegend' id='travelEmissions'></emissions>
+<!-- 		    <div class="legend" id="travelLegend"></div>
+		    <div class="legend" id="travelLegend2"></div> -->
 
-	    <bars-chart chart-data="outsideData" chart-title = "Out of Home Emissions (kg CO2)" world=2 neighbors=7 legend=true id='outsideEmissions' ></bars-chart>
+		    <emissions chart-data="outsideData" chart-title = "Out of Home Emissions (kg CO2)" world=2 neighbors=7 legend=true legend-div='outsideLegend'id='outsideEmissions' ></emissions>
+<!-- 		    <div class="legend" id="outsideLegend"></div>
+		    <div class="legend" id="outsideLegend2"></div> -->
 
-	    <bars-chart chart-data="totalData" chart-title = "Total Emissions (kg CO2)" world=4 neighbors=6 legend=false id='totalEmissions' ></bars-chart>
+		    <emissions chart-data="totalData" chart-title = "Total Emissions (kg CO2)" world=4 neighbors=6 legend=false legend-div='totalLegend'id='totalEmissions' ></emissions>
+		</div>
+
+		<div class="activityLeg">
+		    <div id="activityLegend"></div>
+	   		<div id="activityLegend2"></div>
+	   	</div>
+		<div class="travelLeg">
+	   		<div id="travelLegend"></div>
+		    <div  id="travelLegend2"></div>
+		</div>
+
+		<div class="outsideLeg">
+		    <div id="outsideLegend"></div>
+		    <div id="outsideLegend2"></div>
+	   	</div>
+
+		<div id="totalLegend"></div>
+
 	</div>
-</body>
+
+</body>		

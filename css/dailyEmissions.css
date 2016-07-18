@@ -1,0 +1,62 @@
+.emissions.axis path,
+
+.emissions.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.emissions.y.axis path {
+  display: none;
+}
+
+.activityLeg{
+	clear:left;
+	float:left;
+}
+
+.travelLeg{
+	float:left;
+}
+
+.outsideLeg{
+	float:left;
+}
+
+#travelLegend{
+	font: 9.8px Open Sans, sans-serif;
+	padding-left: 140px;
+	padding-top: 10px;
+	width:150px;
+}
+#travelLegend2{
+	font: 9.8px Open Sans, sans-serif;
+	padding-left: 140px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	width:150px;
+
+}
+
+#outsideLegend{
+	font: 9.8px Open Sans, sans-serif;
+	padding-left: 50px;
+	padding-top: 10px;
+	width:350px;
+}
+#outsideLegend2{
+	font: 9.8px Open Sans, sans-serif;
+	padding-left: 50px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	width:350px;
+
+}
+
+#totalLegend{
+	float:left;
+	font: 9.8px Open Sans, sans-serif;
+	padding-left: 0px;
+	padding-top: 10px;
+	width:50px;
+}
