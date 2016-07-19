@@ -40,7 +40,7 @@
         showAxisTop = false,
         showTodayLine = false,
         timeAxisTick = false,
-        timeAxisTickFormat = {stroke: "stroke-dasharray", spacing: "4 10"},
+        timeAxisTickFormat = {stroke: "stroke-dasharray", spacing: "3 10"},
         showTodayFormat = {marginTop: 25, marginBottom: 0, width: 1, color: colorCycle},
         showBorderLine = false,
         showBorderFormat = {marginTop: 25, marginBottom: 0, width: 1, color: colorCycle},
@@ -129,7 +129,7 @@
         .attr("class", "activity axis")
         .attr("transform", "translate(" + 0 + "," + (margin.top + (itemHeight + itemMargin) * maxStack) + ")")
         .attr(timeAxisTickFormat.stroke, timeAxisTickFormat.spacing)
-        .call(xAxis.tickFormat("").tickSize(-(margin.top + (itemHeight + itemMargin) * (maxStack - 1) + 3), 0, 0));
+        .call(xAxis.tickFormat("").tickSize(-((itemHeight + itemMargin) * (maxStack - 1) + 3), 0, 0));
     };
 
     var appendBackgroundBar = function (yAxisMapping, index, g, data, datum) {

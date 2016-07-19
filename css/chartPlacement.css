@@ -1,5 +1,11 @@
-  .dailyTime{
+   .dailyTime{
     padding-top: 5px;
+    float:left;
+    width:180;
+    clear:left;
+  } 
+  .dailyTime2{
+    padding-top: 15px;
     float:left;
     width:180;
     clear:left;
@@ -11,22 +17,62 @@
     padding-left: 450px;
   }
 
-
-  #activityTimeline{
+  #activityTimeline1{
     float: left;
     width:180;
-    padding-top: 30px;
+    padding-top: 20px;
     padding-bottom:0px;
     padding-left: 40px;
     padding-right: 230px;
   }
 
-  #travelEmissions{
+  #travelEmissions1{
     float: left;
     width:180;
     padding-top: 20px;
     padding-bottom:20px;
-    padding-left: 20px;
+    padding-left: 40px;
+  }
+
+  #dailyPassengers{
+    float: left;
+    width:180;
+    padding-top: 20px;
+    padding-bottom:20px;
+    padding-left: 40px;
+  }
+  #dailyDistance{
+    float: left;
+    width:180;
+    padding-top: 20px;
+    padding-bottom:20px;
+    padding-left: 40px;
+  }
+
+  #dailyTime{
+    float: left;
+    width:180;
+    padding-top: 20px;
+    padding-bottom:20px;
+    padding-left: 40px;
+  }
+
+/*SECOND ROW OF GRAPHS*/  
+  #activityTimeline2{
+    float: left;
+    width:180;
+    padding-top: 20px;
+    padding-bottom:0px;
+    padding-left: 40px;
+    padding-right: 230px;
+  }
+
+  #travelEmissions2{
+    float: left;
+    width:180;
+    padding-top: 20px;
+    padding-bottom:20px;
+    padding-left: 40px;
   }
 
   #outsideEmissions{

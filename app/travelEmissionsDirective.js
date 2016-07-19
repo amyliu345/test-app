@@ -2,7 +2,7 @@
    //in your HTML, this will be named as bars-chart
 angular.module('myApp')
 
-.directive('emissions', function () {
+.directive('simpleChart', function () {
      //explicitly creating a directive definition variable
      //this may look verbose but is good for clarification purposes
      //in real life you'd want to simply return the object {...}
@@ -19,6 +19,7 @@ angular.module('myApp')
          //passed thru chart-data attribute
          scope: { data: '=chartData',
                   title: '@chartTitle',
+                  bigTitle:'@',
                   world: '=',
                   neighbors: '=',
                   legendDiv: '@',
@@ -26,9 +27,9 @@ angular.module('myApp')
          link: function (scope, element, attrs) {
 
             var margins = {
-            top: 40,
+            top: 60,
             left: 10,
-            right: 50,
+            right: 60,
             bottom: 50
             },
 
@@ -37,8 +38,8 @@ angular.module('myApp')
 
             var activityToColor = {},
             i,
-            color = ['#E5DF96','#E5A698','#906060','#CC98E5','#646464','#F95353','#F95D00','#E52700','#9E6EA4','#A0E500','#B34CE5','#CEE598','#E5664C','#906860','#703090','#C8C8C8','#969696','#E57D00','#E5C298','#305B90','#906430','#00A04C','#4C91E5','#CCEEFF','#98BBE5'],
-            activity = ["Home","Work","Work-Related Business","Education","Pick Up/Drop Off","Personal Errand/Task","Meal/Eating Break","Shopping","Social","Recreation","Entertainment","Sports/Exercise","To Accompany Someone","Other Home","Medical/Dental (Self)","Other (stop)","Change Mode/Transfer","Car/Van","Taxi","Bus","Other (mode)","Motorcycle/Scooter","LRT/MRT","Bicycle","Foot"]
+            color = ['#E5DF96','#E5A698','#906060','#CC98E5','#646464','#F95353','#F95D00','#E52700','#9E6EA4','#A0E500','#B34CE5','#CEE598','#E5664C','#906860','#703090','#C8C8C8','#969696','#E57D00','#E5C298','#305B90','#906430','#00A04C','#4C91E5','#CCEEFF','#98BBE5', '#66ccff'],
+            activity = ["Home","Work","Work-Related Business","Education","Pick Up/Drop Off","Personal Errand/Task","Meal/Eating Break","Shopping","Social","Recreation","Entertainment","Sports/Exercise","To Accompany Someone","Other Home","Medical/Dental (Self)","Other (stop)","Change Mode/Transfer","Car/Van","Taxi","Bus","Other (mode)","Motorcycle/Scooter","LRT/MRT","Bicycle","Foot", "Passengers"] //passengers is just for the color of the passengers graph
             for (i = 0; i < activity.length; i++) {
                 activityToColor[activity[i]] = color[i];
             };
@@ -58,7 +59,7 @@ angular.module('myApp')
     
         //have to do this to sync data     
         scope.$watch('data', function(){
-
+console.log("other stuff");
             var reflineNeighbor = scope.neighbors;
             var reflineWorld = scope.world;
             var dataset = scope.data;
@@ -141,6 +142,8 @@ angular.module('myApp')
                 .scale(yScale)
                 .orient('left')
                 .tickSize(0);
+
+      if (reflineNeighbor != 0 && reflineWorld != 0){
       //Reference Line Neighbors
         svg.append("line")
           .style("stroke-dasharray", ("2,2"))
@@ -163,7 +166,7 @@ angular.module('myApp')
           .attr("font-family", "sans-serif")
           .attr("font-size", "9px")
           .attr("fill", "white")
-          .attr('x', xScale(reflineNeighbor)-5)
+          .attr('x', xScale(reflineNeighbor)-3)
           .attr('y', -5)
           .text(reflineNeighbor);
 
@@ -199,7 +202,7 @@ angular.module('myApp')
           .attr("font-family", "sans-serif")
           .attr("font-size", "9px")
           .attr("fill", "white")
-          .attr('x', xScale(reflineWorld)-5)
+          .attr('x', xScale(reflineWorld)-3)
           .attr('y', -5)
           .text(reflineWorld);
 
@@ -212,6 +215,9 @@ angular.module('myApp')
           .attr('x', xScale(reflineWorld)-15)
           .attr('y', -20)
           .text('World');
+
+        };
+
         //Bars
         var groups = svg.selectAll('g')
             .data(dataset)
@@ -267,12 +273,41 @@ angular.module('myApp')
             .attr('y', height+45)
             .text(scope.title);
 
+            //top label
+        svg.append('text')
+            .attr('class', 'bigTitle')
+            .attr('fill','black')
+            .attr('x', 0)
+            .attr('y', -40)
+            .text(scope.bigTitle);
+
 
         if (scope.legend){
-                  //Legend
-            var svg2 = d3.select('#'+scope.legendDiv).append("svg")
-              .attr("width", 350).attr("height", 50);
-            var counter = 30;
+
+            if ('#'+attrs.id == '#totalEmissions'){
+                var svg4 = d3.select('#'+attrs.id).append("svg")
+                  .attr("class", scope.legendDiv +"").attr("width", 350).attr("height", 50);
+
+                var text = svg4.append('text')
+                      .attr('fill', 'black')
+                      .attr('x', 120)
+                      .attr('y', 10)
+                      .text('Home')
+
+                var rects = svg4.append('rect')
+                      .attr('fill',activityToColor['Home'])
+                      .attr('width', 25)
+                      .attr('height', 25)
+                      .attr('x', 120)
+                      .attr('y', 20);
+
+              }
+
+            else{
+            //Legend
+            var svg2 = d3.select('#'+attrs.id).append("svg")
+              .attr("class", scope.legendDiv +"").attr("width", 350).attr("height", 50);
+            var counter = 0;
             for (var i = 0; i < Math.floor(series.length / 2); i++) {
 
               var text = svg2.append('text')
@@ -289,12 +324,12 @@ angular.module('myApp')
                     .attr('y', 20);
 
               counter +=42;
-            };
+            }
 
             //Legend second row
-            var svg3 = d3.select('#'+scope.legendDiv + '2').append("svg")
-              .attr("width", 370).attr("height", 50);
-            var counter = 30;
+            var svg3 = d3.select('#'+attrs.id).append("svg")
+              .attr("class", scope.legendDiv +"2").attr("width", 370).attr("height", 50);
+            var counter = 0;
             for (var i = Math.floor(series.length/2); i < series.length-1; i++) {
 
 
@@ -313,62 +348,9 @@ angular.module('myApp')
 
               counter +=42;
             };
+          }
 
-        }
-
-        else{
-          var svg4 = d3.select('#totalLegend').append("svg")
-                .attr("width", 350).attr("height", 50);
-
-                var text = svg4.append('text')
-                      .attr('fill', 'black')
-                      .attr('x', 30)
-                      .attr('y', 10)
-                      .text('Home')
-
-                var rects = svg4.append('rect')
-                      .attr('fill',activityToColor['Home'])
-                      .attr('width', 25)
-                      .attr('height', 25)
-                      .attr('x', 30)
-                      .attr('y', 20);
-
-              };
-    //Legend
-    // console.log(scope.legend);
-    // if (scope.legend){
-    //     for (var i = 0; i < Math.floor(series.length / 2); i++) {
-    //           svg.append('text')
-    //               .attr('class', 'legendLabel')
-    //               .attr('fill', 'black')
-    //               .attr('x', i * 50)
-    //               .attr('y', height+80)
-    //               .text(activityToAbbrev[series[i]]);
-    //           svg.append('rect')
-    //               .attr('fill', activityToColor[series[i]])
-    //               .attr('width', 25)
-    //               .attr('height', 25)
-    //               .attr('x', i * 50)
-    //               .attr('y', height+85);    
-    //     };
-
-    // //Legend second row
-    //     for (var i = Math.floor(series.length/2); i < series.length; i++) {
-    //           svg.append('text')
-    //               .attr('class', 'legendLabel')
-    //               .attr('fill', 'black')
-    //               .attr('x', (i-Math.floor(series.length/2)) * 50)
-    //               .attr('y', height+130)
-    //               .text(activityToAbbrev[series[i]]);
-    //           svg.append('rect')
-    //               .attr('fill', activityToColor[series[i]])
-    //               .attr('width', 25)
-    //               .attr('height', 25)
-    //               .attr('x', (i-Math.floor(series.length/2)) * 50)
-    //               .attr('y', height+135);      
-    //     };  
-    //   };
-
+        }; 
 
       });
 
@@ -395,129 +377,136 @@ angular.module('myApp')
          //passed thru chart-data attribute
          scope: { data: '=chartData',
                   title: '@chartTitle',
+                  bigTitle: '@',
                   legend:'='},
          link: function (scope, element, attrs) {
             scope.$watch('data', function(){
+              if (scope.data != null){
+                  var testDataWithColorPerTime = scope.data;
+                    
+                  function msToTime(s) {
 
-              var testDataWithColorPerTime = scope.data;
-                
-              function msToTime(s) {
+                      var ms = s % 1000;
+                      s = (s - ms) / 1000;
+                      var secs = s % 60;
+                      s = (s - secs) / 60;
+                      var mins = s % 60;
+                      var hrs = (s - mins) / 60;
 
-                  var ms = s % 1000;
-                  s = (s - ms) / 1000;
-                  var secs = s % 60;
-                  s = (s - secs) / 60;
-                  var mins = s % 60;
-                  var hrs = (s - mins) / 60;
+                      return hrs + ' hrs ' + mins + ' mins';
+                  }
 
-                  return hrs + ' hrs ' + mins + ' mins';
-              }
+                  var width = 420;
 
-              var width = 420;
+                  var colors = ['#E5DF96','#E5A698','#906060','#CC98E5','#646464','#F95353','#F95D00','#E52700','#9E6EA4','#A0E500','#B34CE5','#CEE598','#E5664C','#906860','#703090','#C8C8C8','#969696','#E57D00','#E5C298','#305B90','#906430','#00A04C','#4C91E5','#CCEEFF','#98BBE5']
 
-              var colors = ['#E5DF96','#E5A698','#906060','#CC98E5','#646464','#F95353','#F95D00','#E52700','#9E6EA4','#A0E500','#B34CE5','#CEE598','#E5664C','#906860','#703090','#C8C8C8','#969696','#E57D00','#E5C298','#305B90','#906430','#00A04C','#4C91E5','#CCEEFF','#98BBE5']
+                  var activities = ["Home","Work","Work-Related Business","Education","Pick Up/Drop Off","Personal Errand/Task","Meal/Eating Break","Shopping","Social","Recreation","Entertainment","Sports/Exercise","To Accompany Someone","Other Home","Medical/Dental (Self)","Other (stop)","Change Mode/Transfer","Car/Van","Taxi","Bus","Other (mode)","Motorcycle/Scooter","LRT/MRT","Bicycle","Foot"]
 
-              var activities = ["Home","Work","Work-Related Business","Education","Pick Up/Drop Off","Personal Errand/Task","Meal/Eating Break","Shopping","Social","Recreation","Entertainment","Sports/Exercise","To Accompany Someone","Other Home","Medical/Dental (Self)","Other (stop)","Change Mode/Transfer","Car/Van","Taxi","Bus","Other (mode)","Motorcycle/Scooter","LRT/MRT","Bicycle","Foot"]
+                  var legend_colors = ['#E5DF96','#E5A698','#906060','#CC98E5','#646464','#F95353','#F95D00','#E52700']
+                  var legend_second_colors = ['#9E6EA4','#A0E500','#B34CE5','#CEE598','#E5664C','#906860','#703090','#C8C8C8']
+              
+                  var legend_text = ["Home","Work","Work-Rel.","Edu.","Pick/Drop","Errand","Eating","Shop"]
+                  var legend_second_text = ["Social","Recreat.","Entertain.","Exercise","Accomp.","Oth. Home","Medical","Transfer"]
+                  // var legend_colors = ['#E5DF96','#E5A698','#CC98E5','#F95D00','#E52700','#B34CE5','#CEE598','#969696']
+                  // var legend_second_colors = ['#E57D00','#E5C298','#305B90','#906430','#00A04C','#4C91E5','#CCEEFF','#98BBE5']
 
-              var legend_colors = ['#E5DF96','#E5A698','#906060','#CC98E5','#646464','#F95353','#F95D00','#E52700']
-              var legend_second_colors = ['#9E6EA4','#A0E500','#B34CE5','#CEE598','#E5664C','#906860','#703090','#C8C8C8']
-          
-              var legend_text = ["Home","Work","Work-Rel.","Edu.","Pick/Drop","Errand","Eating","Shop"]
-              var legend_second_text = ["Social","Recreat.","Entertain.","Exercise","Accomp.","Oth. Home","Medical","Transfer"]
-              // var legend_colors = ['#E5DF96','#E5A698','#CC98E5','#F95D00','#E52700','#B34CE5','#CEE598','#969696']
-              // var legend_second_colors = ['#E57D00','#E5C298','#305B90','#906430','#00A04C','#4C91E5','#CCEEFF','#98BBE5']
+                  // var legend_text = ["Home","Work","Education","Meal","Shopping","Entertain.","Exercise","Transfer"]
+                  // var legend_second_text = ["Car/Van","Taxi","Bus","Other","Scooter","LRT/MRT","Bicycle","Foot"]
 
-              // var legend_text = ["Home","Work","Education","Meal","Shopping","Entertain.","Exercise","Transfer"]
-              // var legend_second_text = ["Car/Van","Taxi","Bus","Other","Scooter","LRT/MRT","Bicycle","Foot"]
+                  var colorScale = d3.scale.ordinal().range(colors)
+                    .domain(activities);
 
-              var colorScale = d3.scale.ordinal().range(colors)
-                .domain(activities);
+                          
+                  var chart = d3.timeline()
+                    .colors(colorScale)
+                    .colorProperty('activity');
 
-                      
-              var chart = d3.timeline()
-                .colors(colorScale)
-                .colorProperty('activity');
+                  var tip = d3.tip()
+                    .attr('class', 'd3-tip')
+                    .offset([-10, 0])
+                    .html(function(d) {
 
-              var tip = d3.tip()
-                .attr('class', 'd3-tip')
-                .offset([-10, 0])
-                .html(function(d) {
+                      return "<span style='color:white'>" + d.activity + "<br>" + msToTime(d.ending_time-d.starting_time)+"</span>";
+                    });
 
-                  return "<span style='color:white'>" + d.activity + "<br>" + msToTime(d.ending_time-d.starting_time)+"</span>";
-                });
+                  chart.stack();
+                  chart.showTimeAxisTick();
+                  chart.itemHeight(33);
+                  chart.margin({left: 10, right: 120, top: 20, bottom: 20});
+                  chart.itemMargin(5);
+                  chart.labelMargin(340);
+                  chart.mouseover(function(d,i,datum){
+                    return tip.show(d)
+                  });
+                  chart.mouseout(function(d){      
+                    return tip.hide(d)
+                  });
 
-              chart.stack();
-              chart.showTimeAxisTick();
-              chart.itemHeight(30);
-              chart.margin({left: 10, right: 120, top: 0, bottom: 20});
-              chart.itemMargin(7);
-              chart.labelMargin(340);
-              chart.mouseover(function(d,i,datum){
-                return tip.show(d)
-              });
-              chart.mouseout(function(d){      
-                return tip.hide(d)
-              });
-
-
-              var svg = d3.select("#activityTimeline")
-                .append("svg")
-                .attr("width", width)
-                .attr('id', 'poop')
-                .datum(testDataWithColorPerTime).call(chart);
-
-              d3.select('svg').remove();
-
-              svg.call(tip);
-
-              if (scope.legend){
-                  //Legend
-                  var svg2 = d3.select('#activityLegend').append("svg")
-                    .attr("width", width).attr("height", 50);
-                  var counter = 30;
-                  for (i = 0; i < legend_text.length; i++) {
+                  var svg = d3.select("#"+attrs.id)
+                    .append("svg")
+                    .attr("class", "hey")
+                    .attr("width", width)
+                    .datum(testDataWithColorPerTime).call(chart);
 
 
-                    var text = svg2.append('text')
-                          .attr('fill', 'black')
-                          .attr('x', counter)
-                          .attr('y', 10)
-                          .text(legend_text[i])
+                  svg.call(tip);
 
-                    var rects = svg2.append('rect')
-                          .attr('fill',legend_colors[i])
-                          .attr('width', 40)
-                          .attr('height', 20)
-                          .attr('x', counter)
-                          .attr('y', 20);
+                  //big label
+                  svg.append('text')
+                    .attr('class', 'bigTitle')
+                    .attr('fill','black')
+                    .attr('x', 0)
+                    .attr('y', 15)
+                    .text(scope.bigTitle);
 
-                    counter +=50;
-                  };
-
-                  //Legend second row
-                  var svg3 = d3.select('#activityLegend2').append("svg")
-                    .attr("width", width).attr("height", 50);
-                  var counter = 30;
-                  for (i = 0; i < legend_second_text.length; i++) {
+                  if (scope.legend){
+                      //Legend
+                      var svg2 = d3.select("#"+attrs.id).append("svg")
+                        .attr("width", width+100).attr("height", 50).attr("class", "activityLegend");
+                      var counter = 0;
+                      for (i = 0; i < legend_text.length; i++) {
 
 
-                    var text = svg3.append('text')
-                          .attr('fill', 'black')
-                          .attr('x', counter)
-                          .attr('y', 10)
-                          .text(legend_second_text[i])
+                        var text = svg2.append('text')
+                              .attr('fill', 'black')
+                              .attr('x', counter)
+                              .attr('y', 10)
+                              .text(legend_text[i])
 
-                    var rects = svg3.append('rect')
-                          .attr('fill',legend_second_colors[i])
-                          .attr('width', 40)
-                          .attr('height', 20)
-                          .attr('x', counter)
-                          .attr('y', 20);
+                        var rects = svg2.append('rect')
+                              .attr('fill',legend_colors[i])
+                              .attr('width', 40)
+                              .attr('height', 20)
+                              .attr('x', counter)
+                              .attr('y', 20);
 
-                    counter +=50;
-                  };
-              }
+                        counter +=50;
+                      };
 
+                      //Legend second row
+                      var svg3 = d3.select("#"+attrs.id).append("svg")
+                        .attr("width", 600).attr("height", 50).attr("class", "activityLegend2");
+                      var counter = 0;
+                      for (i = 0; i < legend_second_text.length; i++) {
+
+
+                        var text = svg3.append('text')
+                              .attr('fill', 'black')
+                              .attr('x', counter)
+                              .attr('y', 10)
+                              .text(legend_second_text[i])
+
+                        var rects = svg3.append('rect')
+                              .attr('fill',legend_second_colors[i])
+                              .attr('width', 40)
+                              .attr('height', 20)
+                              .attr('x', counter)
+                              .attr('y', 20);
+
+                        counter +=50;
+                      };
+                  }
+              }; //if scope.data != null
           }); //should be scope.watch
         } 
 

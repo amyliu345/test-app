@@ -40,6 +40,42 @@ angular.module('myApp').controller('travelEmissionsCtrl', ['$scope', '$http', fu
 
         });
 
+   $http.get('data/dailyPassengers.json')
+       .then(function(res){
+          var passengerData = [];
+
+          for (var i = 0; i < res.data.length; i++){
+              passengerData.push(res.data[i]);
+          }
+
+          $scope.passengerData=passengerData;
+
+        });
+
+   $http.get('data/dailyDistance.json')
+       .then(function(res){
+          var distanceData = [];
+
+          for (var i = 0; i < res.data.length; i++){
+              distanceData.push(res.data[i]);
+          }
+
+          $scope.distanceData=distanceData;
+
+        });
+
+   $http.get('data/dailyTime.json')
+       .then(function(res){
+          var timeData = [];
+
+          for (var i = 0; i < res.data.length; i++){
+              timeData.push(res.data[i]);
+          }
+
+          $scope.timeData=timeData;
+
+        });
+
 
   }]);
 

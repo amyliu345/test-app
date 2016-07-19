@@ -22,52 +22,33 @@
 
 <body>
 
-<!-- 	<div ng-app="myApp" ng-controller="activityTimelineCtrl" id='timeline'>
-		<h1>Daily Time Use</h1>
-	    <activity-timeline chart-data="activityData" legend=true id='activityTimeline' ></activity-timeline>
-	    <div class="legend" id="activityLegend"></div>
-   		<div class="legend" id="activityLegend2"></div>
-	</div> -->
-
-
-
 	<div ng-app="myApp" ng-controller="travelEmissionsCtrl" id='travel'>
-		
+
 		<div class="dailyTime">
-			<h1>Daily Time Use</h1>
-		    <activity-timeline chart-data="activityData" legend=true id='activityTimeline' ></activity-timeline>
-<!-- 		    <div class="legend" id="activityLegend"></div>
-	   		<div class="legend" id="activityLegend2"></div> -->
+		    <activity-timeline chart-data="activityData" big-title="Daily Time Use" legend=true id='activityTimeline1' ></activity-timeline>
 		</div>
-
 		<div class="dailyEmissions">
-			<h2>Daily Carbon Emissions</h2>
-			<emissions chart-data="travelData" chart-title = "Travel Emissions (kg CO2)" world=5 neighbors=6 legend=true legend-div='travelLegend' id='travelEmissions'></emissions>
-<!-- 		    <div class="legend" id="travelLegend"></div>
-		    <div class="legend" id="travelLegend2"></div> -->
+			<simple-chart chart-data="travelData" big-title="Daily Carbon Emissions" chart-title = "Travel Emissions (kg CO2)" world=0 neighbors=0 legend=true legend-div='travelLegend' id='travelEmissions1'></simple-chart>	
 
-		    <emissions chart-data="outsideData" chart-title = "Out of Home Emissions (kg CO2)" world=2 neighbors=7 legend=true legend-div='outsideLegend'id='outsideEmissions' ></emissions>
-<!-- 		    <div class="legend" id="outsideLegend"></div>
-		    <div class="legend" id="outsideLegend2"></div> -->
+			<simple-chart chart-data="passengerData" chart-title = "Average # of Passengers" world=0 neighbors=0 legend=true legend-div='travelLegend' id='dailyPassengers'></simple-chart>		
 
-		    <emissions chart-data="totalData" chart-title = "Total Emissions (kg CO2)" world=4 neighbors=6 legend=false legend-div='totalLegend'id='totalEmissions' ></emissions>
+			<simple-chart chart-data="distanceData" chart-title = "Distance Traveled (km)" world=0 neighbors=0 legend=false legend-div='travelLegend' id='dailyDistance'></simple-chart>	
+
+			<simple-chart chart-data="timeData" chart-title = "Travel Time (hrs)" world=0 neighbors=0 legend=false legend-div='travelLegend' id='dailyTime'></simple-chart>	
 		</div>
 
-		<div class="activityLeg">
-		    <div id="activityLegend"></div>
-	   		<div id="activityLegend2"></div>
-	   	</div>
-		<div class="travelLeg">
-	   		<div id="travelLegend"></div>
-		    <div  id="travelLegend2"></div>
+		<div class="dailyTime">
+	    	<activity-timeline chart-data="activityData" big-title="Daily Time Use" legend=true id='activityTimeline2' ></activity-timeline>
+		</div>
+		<div class="dailyEmissions">
+			<simple-chart chart-data="travelData" big-title="Daily Carbon Emissions" chart-title = "Travel Emissions (kg CO2)" world=5 neighbors=6 legend=true legend-div='travelLegend' id='travelEmissions2'></simple-chart>
+
+		    <simple-chart chart-data="outsideData" chart-title = "Out of Home Emissions (kg CO2)" world=2 neighbors=7 legend=true legend-div='outsideLegend'id='outsideEmissions' ></simple-chart>
+
+		    <simple-chart chart-data="totalData" chart-title = "Total Emissions (kg CO2)" world=4 neighbors=6 legend=false legend-div='totalLegend'id='totalEmissions' ></simple-chart>
 		</div>
 
-		<div class="outsideLeg">
-		    <div id="outsideLegend"></div>
-		    <div id="outsideLegend2"></div>
-	   	</div>
 
-		<div id="totalLegend"></div>
 
 	</div>
 

@@ -10,53 +10,42 @@
   display: none;
 }
 
-.activityLeg{
-	clear:left;
-	float:left;
-}
-
-.travelLeg{
-	float:left;
-}
-
-.outsideLeg{
-	float:left;
-}
-
-#travelLegend{
+/* legend placement
+*/
+.travelLegend{
 	font: 9.8px Open Sans, sans-serif;
-	padding-left: 140px;
+	padding-left: 0px;
 	padding-top: 10px;
-	width:150px;
+	width:200px;
 }
-#travelLegend2{
+.travelLegend2{
 	font: 9.8px Open Sans, sans-serif;
-	padding-left: 140px;
+	padding-left: 0px;
 	padding-top: 10px;
 	padding-bottom: 10px;
-	width:150px;
+	width:200px;
 
 }
 
-#outsideLegend{
+.outsideLegend{
 	font: 9.8px Open Sans, sans-serif;
-	padding-left: 50px;
+	padding-left: 0px;
 	padding-top: 10px;
 	width:350px;
 }
-#outsideLegend2{
+.outsideLegend2{
 	font: 9.8px Open Sans, sans-serif;
-	padding-left: 50px;
+	padding-left: 0px;
 	padding-top: 10px;
 	padding-bottom: 10px;
 	width:350px;
 
 }
 
-#totalLegend{
+.totalLegend{
 	float:left;
 	font: 9.8px Open Sans, sans-serif;
 	padding-left: 0px;
 	padding-top: 10px;
-	width:50px;
+	width:200px;
 }
