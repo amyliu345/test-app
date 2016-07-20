@@ -23,7 +23,8 @@ angular.module('myApp')
                   world: '=',
                   neighbors: '=',
                   legendDiv: '@',
-                  legend:'='},
+                  legend:'=',
+                  units: '@'},
          link: function (scope, element, attrs) {
 
             var margins = {
@@ -59,7 +60,6 @@ angular.module('myApp')
     
         //have to do this to sync data     
         scope.$watch('data', function(){
-console.log("other stuff");
             var reflineNeighbor = scope.neighbors;
             var reflineWorld = scope.world;
             var dataset = scope.data;
@@ -106,7 +106,7 @@ console.log("other stuff");
               .attr('class', 'd3-tip')
               .offset([-10, 0])
               .html(function(d) {
-                return "<span style='color:white'>" + d.mode + "<br>"+ d.x + " " + "kg" + "</span>";
+                return "<span style='color:white'>" + d.mode + "<br>"+ d.x + " " + scope.units + "</span>";
               })
                 
             svg.call(tip);
@@ -515,4 +515,392 @@ console.log("other stuff");
    })
 
 
+.directive('weeklyCarbonChart', function () {
+     //explicitly creating a directive definition variable
+     //this may look verbose but is good for clarification purposes
+     //in real life you'd want to simply return the object {...}
+     return {
+         //We restrict its use to an element
+         //as usually  <bars-chart> is semantically
+         //more understandable
+         restrict: 'E',
+         //this is important,
+         //we don't want to overwrite our directive declaration
+         //in the HTML mark-up
+         //replace: false,
+         //our data source would be an array
+         //passed thru chart-data attribute
+         scope: { data: '=chartData',
+                  title: '@chartTitle',
+                  bigTitle: '@',
+                  legend:'='},
+         link: function (scope, element, attrs) {
+            var margin = {
+                top: 70,
+                right: 20,
+                bottom: 60,
+                left: 60
+              },
+              width = 200 - margin.left - margin.right,
+              height = 500 - margin.top - margin.bottom;
 
+            var x = d3.scale.ordinal()
+                .rangeRoundBands([0, width], .1);
+
+            var y = d3.scale.linear()
+                .rangeRound([height, 0]);
+
+            var color = d3.scale.ordinal()
+                .range(["#008000", "#804000"]);
+
+            var xAxis = d3.svg.axis()
+                .scale(x)
+                .tickSize(0)
+                .tickPadding(10)
+                .orient("bottom");
+
+            var yAxis = d3.svg.axis()
+                .scale(y)
+                .orient("left")
+                .tickFormat(d3.format(".2s"));
+
+            var svg = d3.select("#weeklyCarbonCost").append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+              .append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+            d3.csv("data/weeklyCarbonCost.csv", function(error, data) {
+              if (error) throw error;
+
+              color.domain(d3.keys(data[0]).filter(function(key) { return key !== "State"; }));
+
+              data.forEach(function(d) {
+                var y0 = 0;
+                d.ages = color.domain().map(function(name) { return {name: name, y0: y0, y1: y0 += +d[name]}; });
+                d.total = d.ages[d.ages.length - 1].y1;
+              });
+
+             // data.sort(function(a, b) { return b.total - a.total; });
+
+              x.domain(data.map(function(d) {return d.State; }));
+              y.domain([0, d3.max(data, function(d) {return d.total; })]);
+
+              var tip1 = d3.tip()
+                    .attr('class', 'd3-tip')
+                    .offset([-10, 0])
+                      .html(function(d) {
+                        if (d.name=='userShare'){
+                        return "<span style='color:white'>" + "$" + (d.y1-d.y0) + " - Your Share of Carbon Cost" + "</span>";
+                      }
+                      else{
+                        return "<span style='color:white'>" + "$" + (d.y1-d.y0) + " - Full Cost of Car and Fuel" + "</span>";
+                        }
+                      })
+              var tip2 = d3.tip()
+                  // .attr('class', 'd3-tip')
+                  // .offset([-10, 0])
+                  //   .html(function(d) {
+                  //                 console.log(d);
+
+                  //     return "<span style='color:white'>" + "$" + d.cost + " - Full Cost of Car and Fuel" + "</span>";
+                  //   })
+
+              svg.append("g")
+                  .attr("transform", "translate(0," + height + ")")
+                  .attr("class", "weekly x axis")
+                  // .attr("class", "weekly x text")
+                  .call(xAxis);
+
+              svg.append("g")
+                  .attr("class", "weekly y axis")
+                  .call(yAxis)
+                .append("text")
+                  .attr("class", "weekly y text")
+                  .attr("transform", "rotate(-90)")
+                  .attr("y", 6)
+                  .attr("dy", ".71em")
+                  .style("text-anchor", "end")
+                  .text("Cost (SGD)");
+
+              var state = svg.selectAll(".state")
+                  .data(data)
+                .enter().append("g")
+                  .attr("class", "g")
+                  .attr("transform", function(d) {
+                   
+                    t = x(d.State)
+                    t+=15
+                    return "translate(" + t + ",0)"; 
+                  })
+
+                state.call(tip1)
+
+
+              state.selectAll("rect")
+                  .data(function(d) { return d.ages; })
+                .enter().append("rect")
+                  .attr("width", x.rangeBand()-25)
+                  .attr("y", function(d) { return y(d.y1); })
+                  .attr("height", function(d) {return y(d.y0) - y(d.y1); })
+                  .on('mouseover', tip1.show)
+                  .on('mouseout', tip1.hide)
+                  .style("fill", function(d) { return color(d.name); });
+
+
+                //Daily carbon emissions top label
+              svg.append('text')
+                  .attr('class', 'bigTitle')
+                  .attr('fill','black')
+                  .attr('x', 50)
+                  .attr('y', -53)
+                  .text(scope.bigTitle);
+
+            });
+        } 
+
+      };
+
+   })
+
+
+
+   .directive('weeklyChart', function () {
+     //explicitly creating a directive definition variable
+     //this may look verbose but is good for clarification purposes
+     //in real life you'd want to simply return the object {...}
+     return {
+         //We restrict its use to an element
+         //as usually  <bars-chart> is semantically
+         //more understandable
+         restrict: 'E',
+         //this is important,
+         //we don't want to overwrite our directive declaration
+         //in the HTML mark-up
+         //replace: false,
+         //our data source would be an array
+         //passed thru chart-data attribute
+         scope: {title: '@chartTitle',
+                  bigTitle: '@',
+                  url:'@',
+                  legend:'=',
+                  color:'@',
+                  units:'@'},
+         link: function (scope, element, attrs) {
+            scope.$watch('data', function(){
+              var margin = {
+                  top: 120,
+                  right: 20,
+                  bottom: 200,
+                  left: 40
+                },
+                width = 250,
+                height = 360;
+
+              var x = d3.scale.ordinal()
+                .rangeRoundBands([0, width], .1);
+
+              var y = d3.scale.linear()
+                .range([height, 0]);
+
+              var xAxis = d3.svg.axis()
+                .scale(x)
+                .tickSize(0)
+                .tickPadding(10)
+                .orient("bottom");
+
+              var yAxis = d3.svg.axis()
+                .scale(y)
+                .orient("left");
+
+              var svg = d3.select("#"+attrs.id).append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .attr("class", "svg")
+                .append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+              d3.csv(scope.url, type, function(error, data) {
+
+                // console.log(data)
+                x.domain(data.map(function(d) {
+                  return d.mode;
+                }));
+
+                y.domain([0, d3.max(data, function(d) {
+                  return Math.max(d.user, d.neighbor);
+                })]);
+
+                svg.append("g")
+                  .attr("class", "weekly x axis")
+                  .attr("class", "weekly x text")
+                  .attr("transform", "translate(0," + height + ")")
+                  .call(xAxis);
+
+                svg.append("g")
+                  .attr("class", "weekly y axis")
+                  .attr("transform", "translate(-10,0)")
+                  .call(yAxis)
+
+                  // .append("text")
+                  // .attr("class", "weekly y text")
+                  // .attr("transform", "rotate(-90)")
+                  // .attr("y", 6)
+                  // .attr("dy", ".71em")
+                  // .style("text-anchor", "end")
+                  // .text('Distance (km)');
+
+            // create a group for your overlapped bars
+                var g = svg.selectAll(".bars")
+                  .data(data)
+                  .enter().append("g")
+
+                var tip1 = d3.tip()
+                  .attr('class', 'd3-tip')
+                  .offset([-10, 0])
+
+                var tip2 = d3.tip()
+                  .attr('class', 'd3-tip')
+                  .offset([-10, 0])
+                  // .html(function(d) {
+                  //   return "<span style='color:white'>" + d.user + " " + units + "</span>";
+                  // })
+            // place the second bar on top of it
+                var bar1 = g.append("rect")
+                 // .attr("class", "bar2")
+                  .attr('fill', scope.color)
+                  .attr('opacity', 0.3)
+                  .attr("x", function(d) {
+                    return x(d.mode) + 20;
+                  })
+                  .attr("width", x.rangeBand() - 20)
+                  .attr("y", function(d) {
+                    tip1.html(function(d) {
+                      return "<span style='color:white'>" + "Neighbors: " + "<br>" + d.mode+ " " + d.neighbor + " "+scope.units + "</span>";
+                    })
+                    return y(d.neighbor);
+                  })
+                  .attr("height", function(d) {
+                    return height - y(d.neighbor);
+                  })
+                  bar1.call(tip1)
+                  .on('mouseover', tip1.show)
+                  .on('mouseout', tip1.hide);        
+                 
+            // place the first bar  
+                var bar2 = g.append("rect")
+                  .attr('fill', scope.color)
+                  .attr("class", "bar1")
+                  .attr("x", function(d) {
+                    return x(d.mode) + 5; // center it
+                  })
+                  .attr("width", x.rangeBand() - 20) // make it slimmer
+                  .attr("y", function(d) {
+                    tip2.html(function(d) {
+                      return "<span style='color:white'>" + "You: " + "<br>" + d.mode+ " " + d.user + " "+scope.units + "</span>";
+                    })
+
+                    return y(d.user);
+                  })
+                  .attr("height", function(d) {
+                    return height - y(d.user);
+                  })
+                  bar2.call(tip2)
+                  .on('mouseover', tip2.show)
+                  .on('mouseout', tip2.hide);
+                
+
+            if (scope.legend){
+               //Legend labels
+                svg.append('text')
+                  .attr("class", "weekly text")
+                  .attr('fill', 'black')
+                  .attr('x', 40)
+                  .attr('y', 437)
+                  .text("You");
+
+                svg.append('text')
+                  .attr("class", "weekly text")
+                  .attr('fill', 'black')
+                  .attr('x', 112)
+                  .attr('y', 437)
+                  .text("Your neighbors");
+
+                //Legend 
+                svg.append('rect')
+                  .attr('fill', scope.color)
+                  .attr('width', 25)
+                  .attr('height', 25)
+                  .attr('x', 10)
+                  .attr('y', 420);
+
+                svg.append('rect')
+                  .attr('fill', scope.color)
+                  .attr('opacity', 0.3)
+                  .attr('width', 25)
+                  .attr('height', 25)
+                  .attr('x', 80)
+                  .attr('y', 420);
+
+                //Car icon
+                svg.append("image")
+                  .attr("xlink:href", "images/car.png")
+                  .attr("x", 13)
+                  .attr("y", 340)
+                  .attr("width", 19)
+                  .attr("height", 19);    
+
+                //Bus icon
+                svg.append("image")
+                  .attr("xlink:href", "images/bus.png")
+                  .attr("x", 63)
+                  .attr("y", 340)
+                  .attr("width", 15)
+                  .attr("height", 15);
+
+                //Train icon
+                svg.append("image")
+                  .attr("xlink:href", "images/train.png")
+                  .attr("x", 110)
+                  .attr("y", 340)
+                  .attr("width", 20)
+                  .attr("height", 20); 
+
+                //Bike icon
+                svg.append("image")
+                  .attr("xlink:href", "images/bike.png")
+                  .attr("x", 158)
+                  .attr("y", 340)
+                  .attr("width", 22)
+                  .attr("height", 22);   
+
+                //Walk icon
+                svg.append("image")
+                  .attr("xlink:href", "images/walk.png")
+                  .attr("x", 207)
+                  .attr("y", 340)
+                  .attr("width", 21)
+                  .attr("height", 21); 
+
+                //Big label
+                svg.append('text')
+                    .attr('class', 'bigTitle')
+                    .attr('fill','black')
+                    .attr('x', 30)
+                    .attr('y', -60)
+                    .text(scope.bigTitle);
+                  }
+              });
+            }); //scope.watch
+
+                function type(d) {
+                  d.user = +d.user;
+                  d.neighbor = +d.neighbor;
+                  return d;
+                }
+        } 
+
+      };
+
+   })

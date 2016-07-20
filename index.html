@@ -14,10 +14,11 @@
 <!-- <script type="text/javascript" src="app/outsideEmissionsCtrl.js"></script>
  --><!-- <script type="text/javascript" src="app/outsideEmissionsDirective.js"></script>
  -->
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/main.css">
 <link rel="stylesheet" href="css/activityTimeline.css">
 <link rel="stylesheet" href="css/chartPlacement.css">
 <link rel="stylesheet" href="css/dailyEmissions.css">
+<link rel="stylesheet" href="css/weekly.css">
 
 
 <body>
@@ -28,9 +29,9 @@
 		    <activity-timeline chart-data="activityData" big-title="Daily Time Use" legend=true id='activityTimeline1' ></activity-timeline>
 		</div>
 		<div class="dailyEmissions">
-			<simple-chart chart-data="travelData" big-title="Daily Carbon Emissions" chart-title = "Travel Emissions (kg CO2)" world=0 neighbors=0 legend=true legend-div='travelLegend' id='travelEmissions1'></simple-chart>	
+			<simple-chart chart-data="travelData" big-title="Daily Carbon Emissions" chart-title = "Travel Emissions (kg CO2)" world=0 neighbors=0 legend=true legend-div='travelLegend' units='kg' id='travelEmissions1'></simple-chart>	
 
-			<simple-chart chart-data="passengerData" chart-title = "Average # of Passengers" world=0 neighbors=0 legend=true legend-div='travelLegend' id='dailyPassengers'></simple-chart>		
+			<simple-chart chart-data="passengerData" chart-title = "Average # of Passengers" world=0 neighbors=0 legend=true legend-div='travelLegend' units='kg' id='dailyPassengers'></simple-chart>		
 
 			<simple-chart chart-data="distanceData" chart-title = "Distance Traveled (km)" world=0 neighbors=0 legend=false legend-div='travelLegend' id='dailyDistance'></simple-chart>	
 
@@ -46,8 +47,13 @@
 		    <simple-chart chart-data="outsideData" chart-title = "Out of Home Emissions (kg CO2)" world=2 neighbors=7 legend=true legend-div='outsideLegend'id='outsideEmissions' ></simple-chart>
 
 		    <simple-chart chart-data="totalData" chart-title = "Total Emissions (kg CO2)" world=4 neighbors=6 legend=false legend-div='totalLegend'id='totalEmissions' ></simple-chart>
-		</div>
 
+
+		</div>
+		   	<weekly-carbon-chart big-title="Cost" id='weeklyCarbonCost' ></weekly-carbon-chart>
+		   	<weekly-chart big-title="Travel Time" url= 'data/weeklyTravelTime.csv'legend=true units='hrs' color='#A8232C' id='weeklyTravelTime' ></weekly-chart>
+		   	<weekly-chart big-title="Distance Traveled" url= 'data/weeklyTravelDistance.csv'legend=true units='km' color='#3B639C' id='weeklyTravelDistance' ></weekly-chart>
+		   	<weekly-chart big-title="Average Daily Emissions" url= 'data/weeklyTravelEmissions.csv'legend=true units='kg' color='#9E5B41' id='weeklyTravelEmissions' ></weekly-chart>
 
 
 	</div>

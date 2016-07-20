@@ -30,51 +30,29 @@ angular.module('myApp').controller('travelEmissionsCtrl', ['$scope', '$http', fu
 
    $http.get('data/activityTimeline.json')
        .then(function(res){
-          var activityData = [];
-
-          for (var i = 0; i < res.data.length; i++){
-              activityData.push(res.data[i]);
-          }
-
-          $scope.activityData=activityData;
-
+          $scope.activityData=res.data;
         });
 
    $http.get('data/dailyPassengers.json')
        .then(function(res){
-          var passengerData = [];
-
-          for (var i = 0; i < res.data.length; i++){
-              passengerData.push(res.data[i]);
-          }
-
-          $scope.passengerData=passengerData;
-
+          $scope.passengerData=res.data;
         });
 
    $http.get('data/dailyDistance.json')
        .then(function(res){
-          var distanceData = [];
-
-          for (var i = 0; i < res.data.length; i++){
-              distanceData.push(res.data[i]);
-          }
-
-          $scope.distanceData=distanceData;
-
+          $scope.distanceData=res.data;
         });
+
 
    $http.get('data/dailyTime.json')
        .then(function(res){
-          var timeData = [];
-
-          for (var i = 0; i < res.data.length; i++){
-              timeData.push(res.data[i]);
-          }
-
-          $scope.timeData=timeData;
-
+          $scope.timeData=res.data;
         });
+
+   // $http.get('data/weeklyCarbonCost.csv')
+   //     .then(function(res){
+   //        $scope.weeklyCarbonData=res.data;
+   //      });
 
 
   }]);

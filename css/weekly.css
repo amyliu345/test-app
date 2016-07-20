@@ -1,0 +1,43 @@
+/*Weekly View styling*/
+
+  #weekly{
+    padding-top: 20px;
+    padding-bottom: 40px;
+    padding-left: 50px
+  }
+  .bar1 {
+    opacity: 1;
+  }
+  
+  .bar2 {
+    opacity: 1;
+  }
+  
+  .weekly.axis {
+    font: 10px sans-serif;
+  }
+  
+  .weekly.axis path,
+  .weekly.axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+  }
+  
+  .weekly.text{
+    font: 12px Open Sans, sans-serif;
+  }
+
+  .weekly.y.axis path{
+    fill: none;
+    stroke: #000;
+  }
+  .weekly.x.axis path {
+    display: none;
+  }
+
+  .weekly.button{
+    display:inline;
+    padding-left: 20px;
+    padding-bottom: 60px;
+  }
