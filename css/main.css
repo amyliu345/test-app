@@ -45,3 +45,9 @@
     font: 18px Open Sans, sans-serif;
 
   }
+
+  .angular-google-map-container {
+    clear:left;
+    height: 400px;
+    float:left;
+}

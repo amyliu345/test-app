@@ -110,14 +110,34 @@
 
   #weeklyTravelDistance{
     padding-top: 20px;
-    padding-left: 150px;
+    padding-left: 200px;
     float: left;
     width:200;
   }  
 
   #weeklyTravelEmissions{
     padding-top: 20px;
-    padding-left: 150px;
+    padding-left: 350px;
     float: left;
     width:200;
+  }
+
+/*GOOGLE MAPS
+*/
+
+  #map{
+    margin-left: 40px;
+    margin-top: 60px;
+    margin-bottom: 30px;
+  }
+  .color.button{
+    padding-left: 40px;
+    padding-top: 20px;
+  }
+  .map.button{
+    float:left;
+    display:inline;
+    padding-left: 40px;
+    padding-top: 20px;
+    padding-bottom: 30px;
   }

@@ -44,10 +44,17 @@ angular.module('myApp').controller('travelEmissionsCtrl', ['$scope', '$http', fu
         });
 
 
-   $http.get('data/dailyTime.json')
-       .then(function(res){
-          $scope.timeData=res.data;
-        });
+  $scope.map = {
+          center: {
+                  latitude: 1.36692,
+                  longitude: 103.94706
+          },
+          zoom: 15
+  };
+   // $http.get('data/dailyTime.json')
+   //     .then(function(res){
+   //        $scope.timeData=res.data;
+   //      });
 
    // $http.get('data/weeklyCarbonCost.csv')
    //     .then(function(res){
