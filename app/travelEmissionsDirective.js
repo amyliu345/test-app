@@ -213,7 +213,7 @@ angular.module('myApp')
           .attr("font-size", "8px")
           .attr("fill", "black")
           .attr('x', xScale(reflineWorld)-15)
-          .attr('y', -20)
+          .attr('y', -27)
           .text('World');
 
         };
@@ -350,9 +350,11 @@ angular.module('myApp')
             };
           }
 
+
         }; 
 
-      });
+      });//scope.watch
+
 
         } 
 
@@ -360,13 +362,19 @@ angular.module('myApp')
 
    })
 
-.directive('activityTimeline', function () {
+
+//Uses js/d3-timeline.js 
+.directive('activityTimeline', function () { 
      return {
          restrict: 'E',
          scope: { data: '=chartData',
                   title: '@chartTitle',
                   bigTitle: '@',
-                  legend:'='},
+                  legend:'@',
+                  width:'=',
+                  tickInterval: '=',
+                  labelMargin: '='
+                  },
          link: function (scope, element, attrs) {
             scope.$watch('data', function(){
               if (scope.data != null){
@@ -384,22 +392,43 @@ angular.module('myApp')
                       return hrs + ' hrs ' + mins + ' mins';
                   }
 
-                  var width = 420;
+                  var width = scope.width;
 
                   var colors = ['#E5DF96','#E5A698','#906060','#CC98E5','#646464','#F95353','#F95D00','#E52700','#9E6EA4','#A0E500','#B34CE5','#CEE598','#E5664C','#906860','#703090','#C8C8C8','#969696','#E57D00','#E5C298','#305B90','#906430','#00A04C','#4C91E5','#CCEEFF','#98BBE5']
 
                   var activities = ["Home","Work","Work-Related Business","Education","Pick Up/Drop Off","Personal Errand/Task","Meal/Eating Break","Shopping","Social","Recreation","Entertainment","Sports/Exercise","To Accompany Someone","Other Home","Medical/Dental (Self)","Other (stop)","Change Mode/Transfer","Car/Van","Taxi","Bus","Other (mode)","Motorcycle/Scooter","LRT/MRT","Bicycle","Foot"]
 
-                  var legend_colors = ['#E5DF96','#E5A698','#906060','#CC98E5','#646464','#F95353','#F95D00','#E52700']
-                  var legend_second_colors = ['#9E6EA4','#A0E500','#B34CE5','#CEE598','#E5664C','#906860','#703090','#C8C8C8']
+                  var small_legend_colors = ['#E5DF96','#E5A698','#906060','#CC98E5','#646464','#F95353','#F95D00','#E52700']
+                  var small_legend_second_colors = ['#9E6EA4','#A0E500','#B34CE5','#CEE598','#E5664C','#906860','#703090','#C8C8C8']
               
-                  var legend_text = ["Home","Work","Work-Rel.","Edu.","Pick/Drop","Errand","Eating","Shop"]
-                  var legend_second_text = ["Social","Recreat.","Entertain.","Exercise","Accomp.","Oth. Home","Medical","Transfer"]
+                  var small_legend_text = ["Home","Work","Work-Rel.","Edu.","Pick/Drop","Errand","Eating","Shop"]
+                  var small_legend_second_text = ["Social","Recreat.","Entertain.","Exercise","Accomp.","Oth. Home","Medical","Transfer"]
+
+                  var big_legend_colors = ['#E5DF96','#E5A698','#906060','#CC98E5','#646464','#F95353','#F95D00','#E52700','#9E6EA4','#A0E500','#B34CE5','#CEE598']
+                  var big_legend_second_colors = ['#E5664C','#906860','#703090','#C8C8C8','#E57D00','#E5C298','#305B90','#906430','#00A04C','#4C91E5','#CCEEFF','#98BBE5']
+
+                  var big_legend_text = ["Home","Work","Work-Rel.","Edu.","Pick/Drop","Errand","Eating","Shop","Social","Recreat.","Entertain.","Exercise"]
+                  var big_legend_second_text = ["Accomp.","Oth. Home","Medical","Transfer","Car/Van","Taxi","Bus","Other","Scooter","LRT/MRT","Bicycle","Foot"]
+
                   // var legend_colors = ['#E5DF96','#E5A698','#CC98E5','#F95D00','#E52700','#B34CE5','#CEE598','#969696']
                   // var legend_second_colors = ['#E57D00','#E5C298','#305B90','#906430','#00A04C','#4C91E5','#CCEEFF','#98BBE5']
 
-                  // var legend_text = ["Home","Work","Education","Meal","Shopping","Entertain.","Exercise","Transfer"]
-                  // var legend_second_text = ["Car/Van","Taxi","Bus","Other","Scooter","LRT/MRT","Bicycle","Foot"]
+                  var activityToColor = {},
+                  i,
+                  color = ['#E5DF96','#E5A698','#906060','#CC98E5','#646464','#F95353','#F95D00','#E52700','#9E6EA4','#A0E500','#B34CE5','#CEE598','#E5664C','#906860','#703090','#C8C8C8','#969696','#E57D00','#E5C298','#305B90','#906430','#00A04C','#4C91E5','#CCEEFF','#98BBE5', '#66ccff'],
+                  activity = ["Home","Work","Work-Related Business","Education","Pick Up/Drop Off","Personal Errand/Task","Meal/Eating Break","Shopping","Social","Recreation","Entertainment","Sports/Exercise","To Accompany Someone","Other Home","Medical/Dental (Self)","Other (stop)","Change Mode/Transfer","Car/Van","Taxi","Bus","Other (mode)","Motorcycle/Scooter","LRT/MRT","Bicycle","Foot", "Passengers"] //passengers is just for the color of the passengers graph
+                  for (i = 0; i < activity.length; i++) {
+                      activityToColor[activity[i]] = color[i];
+                  };
+
+                  var activityToAbbrev = {},
+                  i,
+                  activity = ["Home","Work","Work-Related Business","Education","Pick Up/Drop Off","Personal Errand/Task","Meal/Eating Break","Shopping","Social","Recreation","Entertainment","Sports/Exercise","To Accompany Someone","Other Home","Medical/Dental (Self)","Other (stop)","Change Mode/Transfer","Car/Van","Taxi","Bus","Other (mode)","Motorcycle/Scooter","LRT/MRT","Bicycle","Foot"],
+                  abbrev = ["Home", "Work", "Business","Edu.","Pick Up","Errand","Meal","Shop","Social","Rec.","Entertain.","Exercise","Accomp.","Other","Medical","Other","Transfer","Car","Taxi","Bus","Other","Scooter","MRT","Bike","Foot"]
+
+                  for (i = 0; i < activity.length; i++) {
+                      activityToAbbrev[activity[i]] = abbrev[i];
+                  };
 
                   var colorScale = d3.scale.ordinal().range(colors)
                     .domain(activities);
@@ -419,10 +448,16 @@ angular.module('myApp')
 
                   chart.stack();
                   chart.showTimeAxisTick();
-                  chart.itemHeight(33);
-                  chart.margin({left: 10, right: 120, top: 20, bottom: 20});
-                  chart.itemMargin(5);
-                  chart.labelMargin(340);
+                  chart.itemHeight(33); //height of bars
+                  chart.margin({left: 20, right: 110, top: 20, bottom: 20});
+                  chart.itemMargin(5); //margin between horizontal bars
+                  chart.labelMargin(scope.labelMargin); //controls where Monday, Tuesday, etc labels go
+                  chart.tickFormat({format: d3.time.format("%I %p"),
+                                    tickTime: d3.time.hours,
+                                    tickInterval: scope.tickInterval, //change tick intervalshere!!
+                                    tickSize: 6,
+                                    tickValues: null
+                                  })
                   chart.mouseover(function(d,i,datum){
                     return tip.show(d)
                   });
@@ -432,7 +467,6 @@ angular.module('myApp')
 
                   var svg = d3.select("#"+attrs.id)
                     .append("svg")
-                    .attr("class", "hey")
                     .attr("width", width)
                     .datum(testDataWithColorPerTime).call(chart);
 
@@ -447,10 +481,31 @@ angular.module('myApp')
                     .attr('y', 15)
                     .text(scope.bigTitle);
 
-                  if (scope.legend){
+                  var legend_text = '';
+                  var legend_colors = '';
+                  var legend_second_text = '';
+                  var legend_second_colors = '';
+
+
+                  if (scope.legend == 'small'){
+                    legend_text = small_legend_text;
+                    legend_colors = small_legend_colors;
+                    legend_second_text = small_legend_second_text;
+                    legend_second_colors = small_legend_second_colors;
+
+                  }
+
+                  if (scope.legend == 'big'){
+                    legend_text = big_legend_text;
+                    legend_colors = big_legend_colors;
+                    legend_second_text = big_legend_second_text;
+                    legend_second_colors = big_legend_second_colors;
+                  }
+                      
+
                       //Legend
                       var svg2 = d3.select("#"+attrs.id).append("svg")
-                        .attr("width", width+100).attr("height", 50).attr("class", "activityLegend");
+                        .attr("width", width+100).attr("height", 50).attr("class", "activityLegend").attr("id", "#"+attrs.id + "Legend1");
                       var counter = 0;
                       for (i = 0; i < legend_text.length; i++) {
 
@@ -473,7 +528,7 @@ angular.module('myApp')
 
                       //Legend second row
                       var svg3 = d3.select("#"+attrs.id).append("svg")
-                        .attr("width", 600).attr("height", 50).attr("class", "activityLegend2");
+                        .attr("width", 600).attr("height", 50).attr("class", "activityLegend2").attr("id", "#"+attrs.id + "Legend2");
                       var counter = 0;
                       for (i = 0; i < legend_second_text.length; i++) {
 
@@ -493,7 +548,7 @@ angular.module('myApp')
 
                         counter +=50;
                       };
-                  }
+
               }; //if scope.data != null
           }); //should be scope.watch
         } 
@@ -865,141 +920,851 @@ angular.module('myApp')
 
 
 
-.directive('map', function () {
+.directive('transition', function () {
  return {
      restrict: 'E',
      scope: { data: '=chartData',
               title: '@chartTitle',
-              bigTitle: '@',
-              legend:'='},
+              bigTitle:'@',
+              world: '=',
+              neighbors: '=',
+              legendDiv: '@',
+              legend:'=',
+              units: '@',
+              control: '='},
      link: function (scope, element, attrs) {
         scope.$watch('data', function(){
           if (scope.data != null){
-              var testDataWithColorPerTime = scope.data;
-                
-              function msToTime(s) {
 
-                  var ms = s % 1000;
-                  s = (s - ms) / 1000;
-                  var secs = s % 60;
-                  s = (s - secs) / 60;
-                  var mins = s % 60;
-                  var hrs = (s - mins) / 60;
+                scope.internalControl = scope.control || {};
 
-                  return hrs + ' hrs ' + mins + ' mins';
-              }
+                var units = scope.units
+                var refValue = 30;
 
-              var width = 420;
+                var margins = {
+                top: 85,
+                left: 80,
+                right: 20,
+                bottom: 120
+                },
 
-              var colors = ['#E5DF96','#E5A698','#906060','#CC98E5','#646464','#F95353','#F95D00','#E52700','#9E6EA4','#A0E500','#B34CE5','#CEE598','#E5664C','#906860','#703090','#C8C8C8','#969696','#E57D00','#E5C298','#305B90','#906430','#00A04C','#4C91E5','#CCEEFF','#98BBE5']
+                legendPanel = {
+                  width: 180
+                },
 
-              var activities = ["Home","Work","Work-Related Business","Education","Pick Up/Drop Off","Personal Errand/Task","Meal/Eating Break","Shopping","Social","Recreation","Entertainment","Sports/Exercise","To Accompany Someone","Other Home","Medical/Dental (Self)","Other (stop)","Change Mode/Transfer","Car/Van","Taxi","Bus","Other (mode)","Motorcycle/Scooter","LRT/MRT","Bicycle","Foot"]
+                width = 500 - margins.left - margins.right - legendPanel.width,
+                height = 265;
 
-              var legend_colors = ['#E5DF96','#E5A698','#906060','#CC98E5','#646464','#F95353','#F95D00','#E52700']
-              var legend_second_colors = ['#9E6EA4','#A0E500','#B34CE5','#CEE598','#E5664C','#906860','#703090','#C8C8C8']
-          
-              var legend_text = ["Home","Work","Work-Rel.","Edu.","Pick/Drop","Errand","Eating","Shop"]
-              var legend_second_text = ["Social","Recreat.","Entertain.","Exercise","Accomp.","Oth. Home","Medical","Transfer"]
-              // var legend_colors = ['#E5DF96','#E5A698','#CC98E5','#F95D00','#E52700','#B34CE5','#CEE598','#969696']
-              // var legend_second_colors = ['#E57D00','#E5C298','#305B90','#906430','#00A04C','#4C91E5','#CCEEFF','#98BBE5']
+                //modes = ["Car/Van","Taxi","Bus","Other (mode)","Motorcycle/Scooter","LRT/MRT","Bicycle","Foot"]
 
-              // var legend_text = ["Home","Work","Education","Meal","Shopping","Entertain.","Exercise","Transfer"]
-              // var legend_second_text = ["Car/Van","Taxi","Bus","Other","Scooter","LRT/MRT","Bicycle","Foot"]
+                // //Color Scheme
+                // colors = d3.scale.quantize()
+                //   .domain([0,1,2,3,4,5,6,7])
+                //   .range(['#E57D00','#E5C298','#305B90','#906430','#00A04C','#4C91E5','#CCEEFF','#98BBE5']);
 
-              var colorScale = d3.scale.ordinal().range(colors)
-                .domain(activities);
+                var activityToColor = {},
+                        i,
+                        color = ['#E5DF96','#E5A698','#906060','#CC98E5','#646464','#F95353','#F95D00','#E52700','#9E6EA4','#A0E500','#B34CE5','#CEE598','#E5664C','#906860','#703090','#C8C8C8','#969696','#E57D00','#E5C298','#305B90','#906430','#00A04C','#4C91E5','#CCEEFF','#98BBE5'],
+                        activity = ["Home","Work","Work-Related Business","Education","Pick Up/Drop Off","Personal Errand/Task","Meal/Eating Break","Shopping","Social","Recreation","Entertainment","Sports/Exercise","To Accompany Someone","Other Home","Medical/Dental (Self)","Other (stop)","Change Mode/Transfer","Car/Van","Taxi","Bus","Other (mode)","Motorcycle/Scooter","LRT/MRT","Bicycle","Foot"]
+                    for (i = 0; i < activity.length; i++) {
+                        activityToColor[activity[i]] = color[i];
+                };
 
+                var activityToAbbrev = {},
+                    i,
+                    activity = ["Home","Work","Work-Related Business","Education","Pick Up/Drop Off","Personal Errand/Task","Meal/Eating Break","Shopping","Social","Recreation","Entertainment","Sports/Exercise","To Accompany Someone","Other Home","Medical/Dental (Self)","Other (stop)","Change Mode/Transfer","Car/Van","Taxi","Bus","Other (mode)","Motorcycle/Scooter","LRT/MRT","Bicycle","Foot"],
+                    abbrev = ["Home", "Work", "Business","Edu.","Pick Up","Errand","Meal","Shop","Social","Rec.","Entertain.","Exercise","Accompany","Other","Medical","Other","Transfer","Car","Taxi","Bus","Other","Scooter","MRT","Bike","Foot"]
+
+                for (i = 0; i < activity.length; i++) {
+                    activityToAbbrev[activity[i]] = abbrev[i];
+                };
+
+
+                var legend_text = ["Car/Van","Taxi","Bus","Other (mode)","Motorcycle/Scooter","LRT/MRT","Bicycle","Foot"]
+
+                d3.json("data/dailyDistance.json", function(error, dataset) {  
+                      series = dataset.map(function (d) {
+                          return d.name;
+                      }),
+
+                      dataset = dataset.map(function (d) {
+                          return d.data.map(function (o, i) {
+                              // Structure it so that your numeric
+                              // axis (the stacked amount) is y
+                              return {
+                                  y: +o.count,
+                                  x: o.day
+                              };
+                          });
+                      }),
+
+                      stack = d3.layout.stack();
+                      stack(dataset);
+
+                      dataset = dataset.map(function (group) {
+                      return group.map(function (d) {
+                          // Invert the x and y values, and y0 becomes x0
+                          return {
+                              x: d.y,
+                              y: d.x,
+                              x0: d.y0
+                          };
+                        });
+                      });
+
+                  //SVG
+                      var svg = d3.select('#'+attrs.id)
+                          .append('svg')
+                          .attr('width', width + margins.left + margins.right + legendPanel.width)
+                          .attr('height', height + margins.top + margins.bottom)
+                          .append('g')
+                          .attr('transform', 'translate(' + margins.left + ',' + margins.top + ')');
+
+            ////////////////////////////////////////////////////////////////////////
+                      var tip = d3.tip()
+                        .attr('class', 'd3-tip')
+                        .offset([-10, 0])
+                        .html(function(d) {
+                          return "<span style='color:white'>" + d.x + " " + units + "</span>";
+                        })
+                          
+                      svg.call(tip);
+
+
+                      xMax = d3.max(dataset, function (group) {
+                          return d3.max(group, function (d) {
+                              return d.x + d.x0;
+                          });
+                      }),
                       
-              var chart = d3.timeline()
-                .colors(colorScale)
-                .colorProperty('activity');
+                      xScale = d3.scale.linear()
+                          .domain([0, xMax])
+                          .range([0, width]),
+                      days = dataset[0].map(function (d) {
+                          return d.y;
+                      }),
+                    
+                      yScale = d3.scale.ordinal()
+                          .domain(days)
+                          .rangeRoundBands([0, height], .1),
+                          
+                      //X and Y axis ticks etc.
+                      xAxis = d3.svg.axis()
+                          .scale(xScale)
+                          .ticks(4)
+                          //.tickValues([0, 10, 20, 30])
+                          .outerTickSize(0)
+                          .tickFormat(d3.format(",.0f"))
+                          .orient('bottom'),
+                          
+                      yAxis = d3.svg.axis()
+                          .scale(yScale)
+                          .orient('left')
+                          .tickSize(0);
+                          
 
-              var tip = d3.tip()
-                .attr('class', 'd3-tip')
-                .offset([-10, 0])
-                .html(function(d) {
+            ///ref line code here
+                  drawRefLine(svg, refValue, "Neighbors", 0);
+                  drawRefLine(svg, 20, "World" , 7);
 
-                  return "<span style='color:white'>" + d.activity + "<br>" + msToTime(d.ending_time-d.starting_time)+"</span>";
+                  //Bars
+                  var groups = svg.selectAll('g')
+                      .data(dataset)
+                      .enter()
+                      .append('g')
+                        
+
+                  groups.attr('class', 'group')
+                      .style('fill', function (d, i) {
+                        return activityToColor[series[i]];
+                      });
+
+                  var rects = groups.selectAll('rect')
+                      .data(function (d) {
+                        return d;
+                      })
+                      .enter()
+                      .append('rect')
+
+                  rects.attr('class', 'bar')
+                      .attr('x', function (d) {
+                        return xScale(d.x0);
+                      })
+                      .attr('y', function (d, i) {
+                        return yScale(d.y);
+                      })
+                      .attr('height', function (d) {
+                        return yScale.rangeBand();
+                      })
+                      .attr('width', function (d) {
+                        return xScale(d.x);
+                      })
+                      .on('mouseover', tip.show)
+                      .on('mouseout', tip.hide);
+
+
+                  //X and Y axes
+                  svg.append('g')
+                      .attr('class', 'transition x axis')
+                      .attr('transform', 'translate(0,' + height + ')')
+                      .call(xAxis);
+                          
+                  svg.append('g')
+                      .attr('class', 'transition y axis')
+                      .attr('transform', 'translate(-10, 0)')
+                      .call(yAxis);
+                    
+                  //X axis label
+                  svg.append('text')
+                      .attr('class', 'label')
+                      .attr('fill','black')
+                      .attr('x', 0)
+                      .attr('y', height+45)
+                      .text('Distance Traveled (km)');
+
+                  //Big label
+                  svg.append('text')
+                      .attr('class', 'bigTitle')
+                      .attr('fill','black')
+                      .attr('x', 30)
+                      .attr('y', -60)
+                      .text(scope.bigTitle);
+
+                for (i = 0; i < legend_text.length; i++) {
+
+                      svg.append('text')
+                          .attr('class', 'legendLabel')
+                          .attr('fill', 'black')
+                          .attr('x', i * 48)
+                          .attr('y', 340)
+                          .text(activityToAbbrev[legend_text[i]]);
+                      svg.append('rect')
+                          .attr('fill', activityToColor[legend_text[i]])
+                          .attr('width', 25)
+                          .attr('height', 25)
+                          .attr('x', i * 48)
+                          .attr('y', 345);
+                          
+                      
+              };
+                  // //Legend
+                  // series.forEach(function (s, i) {
+                          
+                  //     //Car icon
+                  //     svg.append("image")
+                  //       .attr("xlink:href", "images/car.png")
+                  //       .attr("x", 2.7)
+                  //       .attr("y", -65)
+                  //       .attr("width", 19)
+                  //       .attr("height", 19);    
+
+                  //     //Bus icon
+                  //     svg.append("image")
+                  //       .attr("xlink:href", "images/bus.png")
+                  //       .attr("x", 40)
+                  //       .attr("y", -54.7)
+                  //       .attr("width", 15)
+                  //       .attr("height", 15);
+
+                  //     //Train icon
+                  //     svg.append("image")
+                  //       .attr("xlink:href", "images/train.png")
+                  //       .attr("x",72.3)
+                  //       .attr("y", -55)
+                  //       .attr("width", 20)
+                  //       .attr("height", 20); 
+
+                  //     //Walk icon
+                  //     svg.append("image")
+                  //       .attr("xlink:href", "images/walk.png")
+                  //       .attr("x", 107.5)
+                  //       .attr("y", -57)
+                  //       .attr("width", 20)
+                  //       .attr("height", 20);   
+
+
+
+                          
+                  // });
+              });
+
+
+
+            //****************************************************************************
+            // ** Update data section (Called from the onclick)
+            //label is for x axis label
+            //datafilename is for the data file - ex. distance.json
+            //numTicks is # of tickmarks in x axis
+            //unit is unit of measurement
+            //refValue is the value of the reference line - a number
+            //refText is the String label for the reference line - ex. "Neighbors"
+            scope.internalControl.updateTransitionData = function updateTransitionData(label, datafilename, numTicks, unit, refValueNeighbors, refValueWorld) {
+              
+              units = unit;
+
+              var margins = {
+              top: 85,
+              left: 80,
+              right: 20,
+              bottom: 50
+              },
+
+              legendPanel = {
+                width: 180
+              },
+
+              width = 500 - margins.left - margins.right - legendPanel.width,
+              height = 400 - margins.top - margins.bottom;
+
+              units = unit;
+                // Get the data again
+              d3.json(datafilename, function(error, dataset) { 
+                series = dataset.map(function (d) {
+                          return d.name;
+                      }),
+
+                dataset = dataset.map(function (d) {
+                    return d.data.map(function (o, i) {
+                        // Structure it so that your numeric
+                        // axis (the stacked amount) is y
+                        return {
+                            y: +o.count,
+                            x: o.day
+                        };
+                    });
+                }),
+
+                stack = d3.layout.stack();
+                stack(dataset);
+
+                dataset = dataset.map(function (group) {
+                  return group.map(function (d) {
+                    // Invert the x and y values, and y0 becomes x0
+                    return {
+                        x: d.y,
+                        y: d.x,
+                        x0: d.y0
+                    };
+                  });
                 });
 
-              chart.stack();
-              chart.showTimeAxisTick();
-              chart.itemHeight(33);
-              chart.margin({left: 10, right: 120, top: 20, bottom: 20});
-              chart.itemMargin(5);
-              chart.labelMargin(340);
-              chart.mouseover(function(d,i,datum){
-                return tip.show(d)
-              });
-              chart.mouseout(function(d){      
-                return tip.hide(d)
-              });
+                xMax = d3.max(dataset, function (group) {
+                          return d3.max(group, function (d) {
+                              return d.x + d.x0;
+                          });
+                      }),
+                      
+                xScale = d3.scale.linear()
+                    .domain([0, xMax])
+                    .range([0, width]),
+                days = dataset[0].map(function (d) {
+                    return d.y;
+                }),
+              
+                yScale = d3.scale.ordinal()
+                    .domain(days)
+                    .rangeRoundBands([0, height], .1),
+                    
+                //X and Y axis ticks etc.
+                xAxis = d3.svg.axis()
+                    .scale(xScale)
+                    .ticks(numTicks)
+                    //.tickValues([0, 10, 20, 30])
+                    .outerTickSize(0)
+                    .tickFormat(d3.format(",.0f"))
+                    .orient('bottom');
 
-              var svg = d3.select("#"+attrs.id)
-                .append("svg")
-                .attr("class", "hey")
-                .attr("width", width)
-                .datum(testDataWithColorPerTime).call(chart);
+                // Select the section we want to apply our changes to
+                var svg = d3.select("#" + attrs.id).transition();
+
+                // Make the changes
+
+                  svg.select(".transition.x.axis") // change the x axis
+                      .transition()
+                      .duration(600)
+                      .call(xAxis);
+
+                  svg.select('.label')
+                      .transition()
+                      .duration(600)
+                      .text(label);
+
+                      console.log(refValueWorld);
+
+                //change reflines Neighbors
+                  svg.selectAll('.ref').filter('.' + "Neighbors")
+                    .transition()
+                    .duration(300)
+                    .attr("x1", xScale(refValueNeighbors))
+                    .attr("x2", xScale(refValueNeighbors))
+                    .attr("cx", xScale(refValueNeighbors));
 
 
-              svg.call(tip);
+                  var offset = 0;
 
-              //big label
-              svg.append('text')
-                .attr('class', 'bigTitle')
-                .attr('fill','black')
-                .attr('x', 0)
-                .attr('y', 15)
-                .text(scope.bigTitle);
-
-              if (scope.legend){
-                  //Legend
-                  var svg2 = d3.select("#"+attrs.id).append("svg")
-                    .attr("width", width+100).attr("height", 50).attr("class", "activityLegend");
-                  var counter = 0;
-                  for (i = 0; i < legend_text.length; i++) {
-
-
-                    var text = svg2.append('text')
-                          .attr('fill', 'black')
-                          .attr('x', counter)
-                          .attr('y', 10)
-                          .text(legend_text[i])
-
-                    var rects = svg2.append('rect')
-                          .attr('fill',legend_colors[i])
-                          .attr('width', 40)
-                          .attr('height', 20)
-                          .attr('x', counter)
-                          .attr('y', 20);
-
-                    counter +=50;
+                  if (refValueNeighbors <10){
+                    offset = 2.5;
                   };
 
-                  //Legend second row
-                  var svg3 = d3.select("#"+attrs.id).append("svg")
-                    .attr("width", 600).attr("height", 50).attr("class", "activityLegend2");
-                  var counter = 0;
-                  for (i = 0; i < legend_second_text.length; i++) {
+                  svg.selectAll('.refText').filter('.' + "Neighbors")
+                    .duration(600)
+                    .attr('x', xScale(refValueNeighbors)-5+offset)
+                    .text(refValueNeighbors);
+
+                  svg.selectAll('.refLabel').filter('.' + "Neighbors")
+                    .duration(600)
+                    .attr('x', xScale(refValueNeighbors)-15)
+                    .text("Neighbors");
+
+              //change reflines World
+                  svg.selectAll('.ref').filter('.' + "World")
+                    .transition()
+                    .duration(300)
+                    .attr("x1", xScale(refValueWorld))
+                    .attr("x2", xScale(refValueWorld))
+                    .attr("cx", xScale(refValueWorld));
 
 
-                    var text = svg3.append('text')
-                          .attr('fill', 'black')
-                          .attr('x', counter)
-                          .attr('y', 10)
-                          .text(legend_second_text[i])
+                  var offset = 0;
 
-                    var rects = svg3.append('rect')
-                          .attr('fill',legend_second_colors[i])
-                          .attr('width', 40)
-                          .attr('height', 20)
-                          .attr('x', counter)
-                          .attr('y', 20);
-
-                    counter +=50;
+                  if (refValueWorld <10){
+                    offset = 3;
                   };
-              }
+
+                  svg.selectAll('.refText').filter('.' + "World")
+                    .duration(600)
+                    .attr('x', xScale(refValueWorld)-5+offset)
+                    .text(refValueWorld);
+
+                  svg.selectAll('.refLabel').filter('.' + "World")
+                    .duration(600)
+                    .attr('x', xScale(refValueWorld)-15)
+                    .text("World");
+
+
+
+                var svg1 = d3.select('#'+attrs.id);
+                // drawRefLine(svg1, 40, "World");
+
+                var groups = svg1.selectAll('.group')
+                    .data(dataset)
+
+                var rects = groups.selectAll('.bar')
+                    .data(function (d) {
+                      return d;
+                    })
+                    .transition()
+                    .duration(700)
+                    .attr('x', function (d) {
+                      return xScale(d.x0);
+                    })
+                    .attr('y', function (d, i) {
+                      return yScale(d.y);
+                    })
+                    .attr('height', function (d) {
+                      return yScale.rangeBand();
+                    })
+                    .attr('width', function (d) {
+                      return xScale(d.x);
+                    });
+
+                });
+            };
+
+            drawRefLine = function drawRefLine(svg, refValue, refText, yOffset){
+
+                    //Reference Line
+                  svg.append("line")
+                    .style("stroke-dasharray", ("2,2"))
+                    .style("stroke", "black")
+                    .attr('class', 'ref ' + refText)
+                    .attr("x1", xScale(refValue))
+                    .attr("y1", -4)
+                    .attr("x2", xScale(refValue))
+                    .attr("y2", 265); 
+
+                  svg.append("circle")  
+                    .style("fill", "gray")
+                    .attr('class', 'ref ' + refText)
+                    .attr("cx", xScale(refValue)) 
+                    .attr("cy", -8)
+                    .attr("r", 8);
+
+                  svg.append("text")  
+                    .attr('class', 'refText ' + refText)
+                    .attr("font-family", "sans-serif")
+                    .attr("font-size", "9px")
+                    .attr("fill", "white")
+                    .attr('x', xScale(refValue)-5)
+                    .attr('y', -5)
+                    .text(refValue);
+
+                  svg.append("text")
+                    .attr('class', 'refLabel ' + refText)
+                    .attr('font', 'Open Sans')
+                    .attr("font-family", "sans-serif")
+                    .attr("font-size", "8px")
+                    .attr("fill", "black")
+                    .attr('x', xScale(refValue)-15)
+                    .attr('y', -20-yOffset)
+                    .text(refText);
+            }
           }; //if scope.data != null
+      }); //should be scope.watch
+    } 
+
+  };
+
+})
+
+
+
+
+
+.directive('weeklyTransition', function () {
+ return {
+     restrict: 'E',
+     scope: { title: '@chartTitle',
+              bigTitle:'@',
+              legend:'=',
+              units: '@',
+              color: '@',
+              control: '='},
+     link: function (scope, element, attrs) {
+
+
+        scope.$watch('data', function(){
+          // if (scope.data != null){
+            var units = scope.units;
+
+                scope.internalControl = scope.control || {};
+                var margin = {
+                    top: 60,
+                    right: 20,
+                    bottom: 60,
+                    left: 40
+                  },
+                  width = 350 - margin.left - margin.right,
+                  height = 420;
+
+                var x = d3.scale.ordinal()
+                  .rangeRoundBands([0, width], .1);
+
+                var y = d3.scale.linear()
+                  .range([height, 0]);
+
+                var xAxis = d3.svg.axis()
+                  .scale(x)
+                  .tickSize(0)
+                  .tickPadding(10)
+                  .orient("bottom");
+
+                var yAxis = d3.svg.axis()
+                  .scale(y)
+                  .orient("left");
+
+                var svg = d3.select("#" + attrs.id).append("svg")
+                  .attr("width", width + margin.left + margin.right)
+                  .attr("height", height + margin.top + margin.bottom)
+                  .attr("class", "svg")
+                  .append("g")
+                  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+
+
+
+                d3.csv("data/weeklyTravelDistance.csv", type, function(error, data) {
+                  // console.log(data)
+                  x.domain(data.map(function(d) {
+                    return d.mode;
+                  }));
+                  y.domain([0, d3.max(data, function(d) {
+                    return Math.max(d.user, d.neighbor);
+                  })]);
+
+                  svg.append("g")
+                    .attr("class", "weekly x axis")
+                    .attr("class", "weekly x text")
+                    .attr("transform", "translate(0," + height + ")")
+                    .call(xAxis);
+
+                  svg.append("g")
+                    .attr("class", "weekly y axis")
+                    .attr("transform", "translate(-10,0)")
+                    .call(yAxis)
+
+                    .append("text")
+                    .attr("class", "weekly y text")
+                    .attr("transform", "rotate(-90)")
+                    .attr("y", 6)
+                    .attr("dy", ".71em")
+                    .style("text-anchor", "end")
+                    .text('Distance (km)');
+
+              // create a group for your overlapped bars
+                  var g = svg.selectAll(".bars")
+                    .data(data)
+                    .enter().append("g")
+
+                  var tip1 = d3.tip()
+                    .attr('class', 'd3-tip')
+                    .offset([-10, 0])
+
+                  var tip2 = d3.tip()
+                    .attr('class', 'd3-tip')
+                    .offset([-10, 0])
+                    // .html(function(d) {
+                    //   return "<span style='color:white'>" + d.user + " " + units + "</span>";
+                    // })
+                      
+              // neighbors bar
+                  var bar1 = g.append("rect")
+                    .attr("class", "bar2")
+                    .attr('fill', scope.color)
+                    .attr('opacity', 0.3)
+                    .attr("x", function(d) {
+                      return x(d.mode) + 20;
+                    })
+                    .attr("width", x.rangeBand() - 20)
+                    .attr("y", function(d) {
+                      tip1.html(function(d) {
+                        return "<span style='color:white'>" + d.neighbor + " " + units + "</span>";
+                      })
+                      return y(d.neighbor);
+                    })
+                    .attr("height", function(d) {
+                      return height - y(d.neighbor);
+                    })
+                    bar1.call(tip1)
+                    .on('mouseover', tip1.show)
+                    .on('mouseout', tip1.hide);        
+                   
+              // users bar  
+                  var bar2 = g.append("rect")
+                    .attr("class", "bar1")
+                    .attr('fill', scope.color)
+                    .attr("x", function(d) {
+                      return x(d.mode) + 5; // center it
+                    })
+                    .attr("width", x.rangeBand() - 20) // make it slimmer
+                    .attr("y", function(d) {
+                      tip2.html(function(d) {
+                        return "<span style='color:white'>" + d.user + " " + units + "</span>";
+                      })
+
+                      return y(d.user);
+                    })
+                    .attr("height", function(d) {
+                      return height - y(d.user);
+                    })
+                    bar2.call(tip2)
+                    .on('mouseover', tip2.show)
+                    .on('mouseout', tip2.hide);
+                  
+
+                  //Legend labels
+                  svg.append('text')
+                    .attr("class", "weekly text")
+                    .attr('fill', 'black')
+                    .attr('x', 40)
+                    .attr('y', 468)
+                    .text("You");
+
+                  svg.append('text')
+                    .attr("class", "weekly text")
+                    .attr('fill', 'black')
+                    .attr('x', 112)
+                    .attr('y', 468)
+                    .text("Your neighbors");
+
+                  //Legend 
+                  svg.append('rect')
+                    .attr('fill', scope.color)
+                    .attr('id', 'you')
+                    .attr('width', 25)
+                    .attr('height', 25)
+                    .attr('x', 10)
+                    .attr('y', 450);
+
+                  svg.append('rect')
+                    .attr('fill', scope.color)
+                    .attr('id', 'neighbor')
+                    .attr('opacity', 0.3)
+                    .attr('width', 25)
+                    .attr('height', 25)
+                    .attr('x', 80)
+                    .attr('y', 450);
+
+                  //Car icon
+                  svg.append("image")
+                    .attr("xlink:href", "images/car.png")
+                    .attr("x", 18.5)
+                    .attr("y", 400)
+                    .attr("width", 19)
+                    .attr("height", 19);    
+
+                  //Bus icon
+                  svg.append("image")
+                    .attr("xlink:href", "images/bus.png")
+                    .attr("x", 76.5)
+                    .attr("y", 400)
+                    .attr("width", 15)
+                    .attr("height", 15);
+
+                  //Train icon
+                  svg.append("image")
+                    .attr("xlink:href", "images/train.png")
+                    .attr("x", 130)
+                    .attr("y", 396)
+                    .attr("width", 20)
+                    .attr("height", 20); 
+
+                  //Bike icon
+                  svg.append("image")
+                    .attr("xlink:href", "images/bike.png")
+                    .attr("x", 185)
+                    .attr("y", 397)
+                    .attr("width", 22)
+                    .attr("height", 22);   
+
+                  //Walk icon
+                  svg.append("image")
+                    .attr("xlink:href", "images/walk.png")
+                    .attr("x", 241)
+                    .attr("y", 396)
+                    .attr("width", 21)
+                    .attr("height", 21);
+
+                  //top label
+                  svg.append('text')
+                      .attr('class', 'bigTitle')
+                      .attr('id', 'weeklyBigTitle')
+                      .attr('fill','black')
+                      .attr('x', 0)
+                      .attr('y', -40)
+                      .text(scope.bigTitle);  
+
+              });
+
+              //****************************************************************************
+              // ** Update data section (Called from the onclick)
+              //label is for x axis label
+              //datafilename is for the data file - ex. distance.json
+              //numTicks is # of tickmarks in x axis
+              //unit is unit of measurement
+              //value is the value of the reference line - a number
+              //text is the label for the reference line - ex. "Neighbors"
+              scope.internalControl.updateWeeklyData = function updateWeeklyData(label, datafilename, unit, chartColor, title) {
+                units = unit;
+
+                var margin = {
+                    top: 60,
+                    right: 20,
+                    bottom: 60,
+                    left: 40
+                },
+                width = 350 - margin.left - margin.right,
+                height = 420;
+
+
+                d3.csv(datafilename, type, function(error, data) {
+
+                  var x = d3.scale.ordinal()
+                    .rangeRoundBands([0, width], .1);
+
+                  var y = d3.scale.linear()
+                    .range([height, 0]);
+
+                  var xAxis = d3.svg.axis()
+                    .scale(x)
+                    .tickSize(0)
+                    .tickPadding(10)
+                    .orient("bottom");
+
+                  var yAxis = d3.svg.axis()
+                    .scale(y)
+                    .orient("left");
+                    //console.log(data)
+                  x.domain(data.map(function(d) {
+                    return d.mode;
+                  }));
+                  y.domain([0, d3.max(data, function(d) {
+                    return Math.max(d.user, d.neighbor);
+                  })]);
+
+                  // Select the section we want to apply our changes to
+                  var svg = d3.select("#" +attrs.id).transition();
+
+
+                  svg.select(".weekly.y.axis") // change the x axis
+                      .transition()
+                      .duration(600)
+                      .call(yAxis)
+
+                  svg.select(".weekly.y.text")
+                      .style("text-anchor", "end")
+                      .text(label);
+                    
+                  //Legend 
+                  svg.select('#you')
+                    .transition()
+                    .attr('fill', chartColor);
+
+                  svg.select('#neighbor')
+                    .transition()
+                    .attr('fill', chartColor);
+
+                  //Title
+                  svg.select("#weeklyBigTitle")
+                    .text(title);
+
+                  var svg1 = d3.select('#'+attrs.id);
+
+                  var rects = svg1.selectAll('.bar2')
+                    .data(data)
+                    .transition()
+                    .duration(700)
+                    .attr('fill', chartColor)
+                    .attr("x", function(d) {
+                      return x(d.mode) + 20;
+                    })
+                    // .attr("width", x.rangeBand() - 20)
+                    .attr("y", function(d) {
+                      return y(d.neighbor);
+                    })
+                    .attr("height", function(d) {
+                      return height - y(d.neighbor);
+                    })
+                    ;   
+
+                  var rects2 = svg1.selectAll('.bar1')
+                    .data(data)
+                    .transition()
+                    .duration(700)
+                    .attr('fill', chartColor)
+                    .attr("x", function(d) {
+                      return x(d.mode) + 5; // center it
+                    })
+                    // .attr("width", x.rangeBand() - 20) // make it slimmer
+                    .attr("y", function(d) {
+                      return y(d.user);
+                    })
+                    .attr("height", function(d) {
+                      return height - y(d.user);
+                    });
+
+                  });
+              };
+
+
+
+                  function type(d) {
+                    d.user = +d.user;
+                    d.neighbor = +d.neighbor;
+                    return d;
+                  }
+          // }; //if scope.data != null
       }); //should be scope.watch
     } 
 

@@ -4,17 +4,15 @@
 
 .activityLegend{
 	font: 9.8px Open Sans, sans-serif;
-	padding-left: 0px;
 	padding-top: 10px;
-	width:400px;
-}
+/*	width:400px;
+*/}
 .activityLegend2{
 	font: 9.8px Open Sans, sans-serif;
-	padding-left: 0px;
 	padding-top: 10px;
 	padding-bottom: 10px;
-	width:400px;
-
+/*	width:400px;
+*/
 }
 
 .activity.axis path,
@@ -27,4 +25,28 @@
 
 .activity.y.axis path {
     display: none;
+}
+
+
+#activityTimeline1Legend1{
+	width:400px;
+}
+#activityTimeline1Legend2{
+	width:400px;
+}
+
+#activityTimeline2Legend1{
+	width:400px;
+}
+#activityTimeline2Legend2{
+	width:400px;
+}
+
+#activityTimeline3Legend1{
+	padding-left: 25px;
+	width:600px;
+}
+#activityTimeline3Legend2{
+	padding-left: 25px;
+	width:600px;
 }

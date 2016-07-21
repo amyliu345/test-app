@@ -1,0 +1,25 @@
+/*Transitions graph styling*/
+
+/*  #timeline{
+    padding-top: 20px;
+    padding-bottom:20px;
+    padding-left: 50px;
+    font: 12px Open Sans, sans-serif;
+
+  }*/
+
+  .transition.axis path,
+
+  .transition.axis line {
+      fill: none;
+      stroke: #000;
+      shape-rendering: crispEdges;
+  }
+
+  .transition.y.axis path {
+      display: none;
+  }
+
+  .label{
+    font: 12px Open Sans, sans-serif;
+  }

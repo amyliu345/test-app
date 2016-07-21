@@ -25,6 +25,7 @@
 <link rel="stylesheet" href="css/chartPlacement.css">
 <link rel="stylesheet" href="css/dailyEmissions.css">
 <link rel="stylesheet" href="css/weekly.css">
+<link rel="stylesheet" href="css/transitions.css">
 
 
 <body onload="initialize()">
@@ -32,47 +33,37 @@
 	<div ng-app="myApp" ng-controller="travelEmissionsCtrl" id='travel'>
 
 		<div class="dailyTime">
-		    <activity-timeline chart-data="activityData" big-title="Daily Time Use" legend=true id='activityTimeline1' ></activity-timeline>
+		    <activity-timeline chart-data="activityData" big-title="Daily Time Use" legend='small' id='activityTimeline1' width = '420' tick-interval = '6' label-margin='340'></activity-timeline>
 		</div>
 		<div class="dailyEmissions">
 			<simple-chart chart-data="travelData" big-title="Daily Carbon Emissions" chart-title = "Travel Emissions (kg CO2)" world=0 neighbors=0 legend=true legend-div='travelLegend' units='kg' id='travelEmissions1'></simple-chart>	
 
-			<simple-chart chart-data="passengerData" chart-title = "Average # of Passengers" world=0 neighbors=0 legend=true legend-div='travelLegend' units='kg' id='dailyPassengers'></simple-chart>		
+			<simple-chart chart-data="passengerData" chart-title = "Average # of Passengers" world=0 neighbors=0 legend=true legend-div='travelLegend' units='people' id='dailyPassengers'></simple-chart>		
 
-			<simple-chart chart-data="distanceData" chart-title = "Distance Traveled (km)" world=0 neighbors=0 legend=false legend-div='travelLegend' id='dailyDistance'></simple-chart>	
+			<simple-chart chart-data="distanceData" chart-title = "Distance Traveled (km)" world=0 neighbors=0 legend=false legend-div='travelLegend' units='km'id='dailyDistance'></simple-chart>	
 
 			<simple-chart chart-data="timeData" chart-title = "Travel Time (hrs)" world=0 neighbors=0 legend=false legend-div='travelLegend' id='dailyTime'></simple-chart>	
 		</div>
 
 		<div class="dailyTime">
-	    	<activity-timeline chart-data="activityData" big-title="Daily Time Use" legend=true id='activityTimeline2' ></activity-timeline>
+	    	<activity-timeline chart-data="activityData" big-title="Daily Time Use" legend='small' id='activityTimeline2' width ='420' tick-interval = '6' label-margin='340'></activity-timeline>
 		</div>
+
 		<div class="dailyEmissions">
-			<simple-chart chart-data="travelData" big-title="Daily Carbon Emissions" chart-title = "Travel Emissions (kg CO2)" world=5 neighbors=6 legend=true legend-div='travelLegend' id='travelEmissions2'></simple-chart>
+			<simple-chart chart-data="travelData" big-title="Daily Carbon Emissions" chart-title = "Travel Emissions (kg CO2)" world=5 neighbors=6 legend=true legend-div='travelLegend' units='kg' id='travelEmissions2'></simple-chart>
 
-		    <simple-chart chart-data="outsideData" chart-title = "Out of Home Emissions (kg CO2)" world=2 neighbors=7 legend=true legend-div='outsideLegend'id='outsideEmissions' ></simple-chart>
+		    <simple-chart chart-data="outsideData" chart-title = "Out of Home Emissions (kg CO2)" world=2 neighbors=7 legend=true legend-div='outsideLegend'units='kg' id='outsideEmissions' ></simple-chart>
 
-		    <simple-chart chart-data="totalData" chart-title = "Total Emissions (kg CO2)" world=4 neighbors=6 legend=false legend-div='totalLegend'id='totalEmissions' ></simple-chart>
-
-
+		    <simple-chart chart-data="totalData" chart-title = "Total Emissions (kg CO2)" world=4 neighbors=6 legend=true legend-div='totalLegend' units='kg' id='totalEmissions' ></simple-chart>
 		</div>
+
+
 		   	<weekly-carbon-chart big-title="Cost" id='weeklyCarbonCost' ></weekly-carbon-chart>
 		   	<weekly-chart big-title="Travel Time" url= 'data/weeklyTravelTime.csv'legend=true units='hrs' color='#A8232C' id='weeklyTravelTime' ></weekly-chart>
 		   	<weekly-chart big-title="Distance Traveled" url= 'data/weeklyTravelDistance.csv'legend=true units='km' color='#3B639C' id='weeklyTravelDistance' ></weekly-chart>
 		   	<weekly-chart big-title="Average Daily Emissions" url= 'data/weeklyTravelEmissions.csv'legend=true units='kg' color='#9E5B41' id='weeklyTravelEmissions' ></weekly-chart>
 
-        	<ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>
-
-
-    	<div id="map" style="height:500px; width:700px"></div>
-
-        <div class = "color button">
-    		<input class='btn btn-default'
-	             type="button" 
-	             id ="toggleColor"
-	             value="Color by Emissions"
-	             onclick="toggleColor()"/>
-    	</div>
+    	<div id="map" style="height:500px; width:850px"></div>
 
 	    <div class = "map button">
 	    <input class='btn btn-default'
@@ -100,7 +91,69 @@
 	    </div>
 	    <div class = "map button">
 	    <input class='btn btn-default'
-	             type="button" id="6"/>
+	             type="button" id="6"/s>
+	    </div>
+
+        <div class = "color button">
+    		<input class='btn btn-default'
+	             type="button" 
+	             id ="toggleColor"
+	             value="Color by Emissions"
+	             onclick="toggleColor()"/>
+    	</div>
+
+	    <activity-timeline chart-data="activityData" big-title="Daily Time Use" legend='big' id='activityTimeline3' width = '700' tick-interval = '3' label-margin='600'></activity-timeline>
+
+
+
+	    <transition chart-data="transitionData" big-title="Travel Summary" legend=true id='transition' world='20' neighbors='40'  units='km' control='focusinControl'></transition>
+	    <div class = "transition button" id="transTimeButton">
+	    <input class='btn btn-default'
+	             name="Time" 
+	             type="button" 
+	             value="Time Traveled" 
+	             ng-click="focusinControl.updateTransitionData('Time Traveled (hours)', 'data/dailyTime.json', 2, 'hrs', 1, 3)" />
+	    </div>
+	    <div class = "transition button", id="transEmissionsButton">
+	    <input class='btn btn-default'
+	             name="Emissions" 
+	             type="button" 
+	             value="Travel Emissions" 
+	             ng-click="focusinControl.updateTransitionData('Travel Emissions (kg CO2)', 'data/emissions.json', 4, 'kg', 4, 3)" />
+	    </div>
+	    <div class = "transition button", id="transDistanceButton">
+	    <input class='btn btn-default'
+	             name="Distance" 
+	             type="button" 
+	             value="Distance Traveled" 
+	             ng-click="focusinControl.updateTransitionData('Distance Traveled (km)', 'data/dailyDistance.json', 4, 'km', 20, 30)" />
+	    </div>
+
+
+
+	    <weekly-transition big-title="Weekly Travel Distance" legend=true id='weeklyTransition' units='km' color='#3B639C' control='focusinControl'></weekly-transition>
+	    <div class = "weekly button", id="timeButton">
+	    <input class='btn btn-default'
+	             name="Time" 
+	             type="button" 
+	             value="Time Traveled" 
+	             ng-click="focusinControl.updateWeeklyData('Time Traveled (hours)', 'data/weeklyTravelTime.csv', 'hrs', '#A8232C', 'Weekly Travel Time')" />
+	    </div>
+	    <div class = "weekly button", id="emissionsButton">
+	    <input class='btn btn-default'
+	             name="Emissions" 
+	             type="button" 
+	             value="Travel Emissions" 
+	             ng-click="focusinControl.updateWeeklyData('Travel Emissions (kg CO2)', 'data/weeklyTravelEmissions.csv', 'kg', '#9E5B41', 'Weekly Travel Emissions')" />
+	    </div>
+	    <div class = "weekly button", id="distanceButton">
+	    <input class='btn btn-default'
+	             name="Distance" 
+	             type="button" 
+	             value="Distance Traveled" 
+	             ng-click="focusinControl.updateWeeklyData('Distance Traveled (km)', 'data/weeklyTravelDistance.csv', 'km', '#3B639C', 'Weekly Travel Distance')" />
+	    </div>
+
 	</div>
 
 </body>		

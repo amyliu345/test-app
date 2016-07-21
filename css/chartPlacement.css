@@ -1,27 +1,24 @@
    .dailyTime{
     padding-top: 5px;
+    padding-bottom:160px;
     float:left;
     width:180;
     clear:left;
   } 
-  .dailyTime2{
-    padding-top: 15px;
-    float:left;
-    width:180;
-    clear:left;
-  }  
+
 
   .dailyEmissions{
     padding-top: 1px;
-    padding-bottom:20px;
+    padding-bottom:160px;
     padding-left: 450px;
+
   }
 
   #activityTimeline1{
     float: left;
     width:180;
     padding-top: 20px;
-    padding-bottom:0px;
+    padding-bottom:160px;
     padding-left: 40px;
     padding-right: 230px;
   }
@@ -30,7 +27,7 @@
     float: left;
     width:180;
     padding-top: 20px;
-    padding-bottom:20px;
+    padding-bottom:50px;
     padding-left: 40px;
   }
 
@@ -38,14 +35,14 @@
     float: left;
     width:180;
     padding-top: 20px;
-    padding-bottom:20px;
+    padding-bottom:50px;
     padding-left: 40px;
   }
   #dailyDistance{
     float: left;
     width:180;
     padding-top: 20px;
-    padding-bottom:20px;
+    padding-bottom:50px;
     padding-left: 40px;
   }
 
@@ -53,7 +50,7 @@
     float: left;
     width:180;
     padding-top: 20px;
-    padding-bottom:20px;
+    padding-bottom:50px;
     padding-left: 40px;
   }
 
@@ -62,7 +59,7 @@
     float: left;
     width:180;
     padding-top: 20px;
-    padding-bottom:0px;
+    padding-bottom:50px;
     padding-left: 40px;
     padding-right: 230px;
   }
@@ -88,7 +85,7 @@
     width:180;
     padding-top: 20px;
     padding-bottom:20px;
-    padding-left: 50px;
+    padding-left: 80px;
   }
 
 /*  THIRD ROW OF GRAPHS
@@ -127,17 +124,97 @@
 
   #map{
     margin-left: 40px;
-    margin-top: 60px;
+    margin-top: 160px;
     margin-bottom: 30px;
   }
   .color.button{
+    clear:left;
     padding-left: 40px;
-    padding-top: 20px;
+    padding-top: 10px;
   }
   .map.button{
     float:left;
     display:inline;
     padding-left: 40px;
-    padding-top: 20px;
+    padding-top: 10px;
     padding-bottom: 30px;
+  }
+
+/*  ACTIVITY TIMELINE*/
+
+  #activityTimeline3{
+    float: left;
+    clear:left;
+    width:180;
+    padding-top: 160px;
+    padding-bottom:0px;
+    padding-left: 40px;
+    padding-right: 230px;
+  }
+
+
+/*TRANSITION GRAPH
+*/
+  #transition{
+    float: left;
+    clear:left;
+    width:180;
+    padding-top: 200px;
+    padding-bottom:20px;
+    padding-left: 40px;
+  }
+
+  #transTimeButton{
+    float: left;
+    clear:left;
+    display:inline;
+    padding-left: 40px;
+    padding-bottom: 10px;
+  }
+
+  #transDistanceButton{
+    float: left;
+    display:inline;
+    padding-left: 40px;
+    padding-bottom: 10px;
+  }
+
+  #transEmissionsButton{
+    float: left;
+    display:inline;
+    padding-left: 40px;
+    padding-bottom: 10px;
+  }
+
+
+/*WEEKLY GRAPH
+*/  
+#weeklyTransition{
+    float: left;
+    clear:left;
+    padding-top: 200px;
+    padding-bottom:20px;
+    padding-left: 40px;
+  }
+
+  #timeButton{
+    float: left;
+    clear:left;
+    display:inline;
+    padding-left: 20px;
+    padding-bottom: 100px;
+  }
+
+  #distanceButton{
+    float: left;
+    display:inline;
+    padding-left: 20px;
+    padding-bottom: 100px;
+  }
+
+  #emissionsButton{
+    float: left;
+    display:inline;
+    padding-left: 20px;
+    padding-bottom: 100px;
   }
